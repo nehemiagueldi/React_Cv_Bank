@@ -77,3 +77,10 @@ export function formatDateEdu(eduDate) {
   let date = new Date(eduDate).getFullYear();
   return date;
 }
+  
+export function calculateAge(birthDate) {
+  let currentDate = new Date().getFullYear();
+  let date = new Date(birthDate).getFullYear();
+  let resultDate = currentDate - date;
+  return resultDate;
+}
