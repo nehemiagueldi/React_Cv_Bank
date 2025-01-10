@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { getCVSkillData, getCVToolData } from "../../service/CVBank";
+import { getCVPersonData } from "../../service/CVBank";
 
 const Skills = () => {
   let [skillData, setSkillData] = useState(null);
   let [toolData, setToolData] = useState(null);
   useEffect(() => {
-    let getSkillsDatas = async () => {
+    let getCVPerson = async () => {
       try {
-        let resultSkill = await getCVSkillData();
-        setSkillData(resultSkill);
+        let resultSkillTool = await getCVPersonData(1);
+        setSkillData(resultSkillTool.cvSkills);
+        setToolData(resultSkillTool.cvTools)
       } catch (error) {
         console.log(error);
       }
     };
-    let getToolsDatas = async () => {
-      try {
-        let resultTool = await getCVToolData();
-        setToolData(resultTool);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getSkillsDatas();
-    getToolsDatas();
+    getCVPerson();
   }, []);
   return (
     <>

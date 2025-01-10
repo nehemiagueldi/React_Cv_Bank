@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { createMarkup, formatDate, getProjectData } from "../../service/CVBank";
+import { createMarkup, formatDate, getCVPersonData } from "../../service/CVBank";
 
 const Project = () => {
-  let [responseData, setResponseData] = useState(null);
+  let [projectData, setProjectData] = useState(null);
   useEffect(() => {
     let getProjectDatas = async () => {
       try {
-        let result = await getProjectData();
-        setResponseData(result);
+        let resultProject = await getCVPersonData(1);
+        setProjectData(resultProject.projects);
       } catch (error) {
         console.log(error);
       }
@@ -21,16 +21,16 @@ const Project = () => {
           Projects
         </h5>
         <div className="container"> 
-          {responseData &&
-            responseData.map((project) => (
+          {projectData &&
+            projectData.map((project) => (
               <div key={project.id}>
                 <div className="d-flex">
-                  <h2 className="fw-bold">{project.company}&nbsp;-&nbsp;</h2>
-                  <h2 className="fw-bold">{project.name}</h2>
+                  <h4 className="fw-bold">{project.company}&nbsp;-&nbsp;</h4>
+                  <h4 className="fw-bold">{project.name}</h4>
                 </div>
                 <div className="d-flex">
-                  <h4 className="fw-bold">{formatDate(project.start_date)}&nbsp;-&nbsp;</h4>
-                  <h4 className="fw-bold">{formatDate(project.end_date)}</h4>
+                  <h5 className="fw-bold">{formatDate(project.start_date)}&nbsp;-&nbsp;</h5>
+                  <h5 className="fw-bold">{formatDate(project.end_date)}</h5>
                 </div>
                 <div dangerouslySetInnerHTML={createMarkup(project.description)}></div>
               </div>
