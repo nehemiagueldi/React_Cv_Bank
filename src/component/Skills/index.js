@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { getCVPersonData } from "../../service/CVBank";
 
-const Skills = () => {
-  let [skillData, setSkillData] = useState(null);
-  let [toolData, setToolData] = useState(null);
+const Skills = ({ skillsData, toolsData }) => {
+  let [skills, setSkills] = useState(null);
+  let [tools, setTools] = useState(null);
   useEffect(() => {
-    let getCVPerson = async () => {
+    if (skillsData) {
       try {
-        let resultSkillTool = await getCVPersonData(1);
-        setSkillData(resultSkillTool.cvSkills);
-        setToolData(resultSkillTool.cvTools)
+        setSkills(skillsData);
+        setTools(toolsData);
       } catch (error) {
         console.log(error);
       }
-    };
-    getCVPerson();
-  }, []);
+    }
+  }, [skillsData, toolsData]);
   return (
     <>
       <div>
@@ -26,8 +23,8 @@ const Skills = () => {
           <div className="row">
             <div className="col">
               <h5 className="text-uppercase fw-bold">Skills</h5>
-              {skillData &&
-                skillData.map((skills) => (
+              {skills &&
+                skills.map((skills) => (
                   <div key={skills.id}>
                     <ul className="mb-2">
                       <li>{skills.skill.name}</li>
@@ -37,8 +34,8 @@ const Skills = () => {
             </div>
             <div className="col">
               <h5 className="text-uppercase fw-bold">Tools</h5>
-              {toolData &&
-                toolData.map((tools) => (
+              {tools &&
+                tools.map((tools) => (
                   <div key={tools.id}>
                     <ul className="mb-2">
                       <li>{tools.tool.name}</li>

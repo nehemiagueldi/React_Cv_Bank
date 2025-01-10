@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { calculateAge, getCVPersonData } from "../../service/CVBank";
+import { calculateAge } from "../../service/CVBank";
 
-const Profile = () => {
+const Profile = ({ profileData }) => {
   let [namePerson, setNamePerson] = useState(null);
   let [genderPerson, setGenderPerson] = useState(null);
   let [birthDatePerson, setBirthDatePerson] = useState(null);
@@ -9,28 +9,23 @@ const Profile = () => {
   let [summaryPerson, setSummaryPerson] = useState(null);
   let [photoPerson, setPhotoPerson] = useState(null);
   useEffect(() => {
-    let getCVPerson = async () => {
+    if (profileData) {
       try {
-        let result = await getCVPersonData(1);
-        setNamePerson(result.cvPerson.person.name);
-        setGenderPerson(result.cvPerson.person.gender);
-        setBirthDatePerson(result.cvPerson.person.birthdate);
-        setPositionPerson(result.cvPerson.position);
-        setSummaryPerson(result.cvPerson.summary);
-        setPhotoPerson(result.cvPerson.photo_profile);
+        setNamePerson(profileData.person.name);
+        setGenderPerson(profileData.person.gender);
+        setBirthDatePerson(profileData.person.birthdate);
+        setPositionPerson(profileData.position);
+        setSummaryPerson(profileData.summary);
+        setPhotoPerson(profileData.photo_profile);
       } catch (error) {
         console.log(error);
       }
-    };
-    getCVPerson();
-  }, []);
+    }
+  }, [profileData]);
   return (
     <>
       <div>
-        <h5
-          className="text-white text-center rounded p-3 text-uppercase fw-bold"
-          style={{ backgroundColor: "#0B2343" }}
-        >
+        <h5 className="text-white text-center rounded p-3 text-uppercase fw-bold" style={{ backgroundColor: "#0B2343" }}>
           Profile
         </h5>
         <div className="container row align-items-center">

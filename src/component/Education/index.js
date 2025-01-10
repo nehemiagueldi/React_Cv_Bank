@@ -1,30 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { formatDateEdu, getEducationDatas } from "../../service/CVBank";
+import { formatDateEdu } from "../../service/CVBank";
 
-const Education = () => {
-  const [educationData, setEducationData] = useState([]);
+const Education = ({ educationData }) => {
+  const [educations, setEducations] = useState(null);
   useEffect(() => {
-    const getEducationData = async () => {
+    if (educationData) {
       try {
-        const data = await getEducationDatas();
-        setEducationData(data);
+        setEducations(educationData);
       } catch (error) {
         console.log(error);
       }
-    };
-    getEducationData();
-  }, []);
+    }
+  }, [educationData]);
   return (
     <div>
-      <h5
-        className="text-white text-center rounded p-3 text-uppercase fw-bold"
-        style={{ backgroundColor: "#0B2343" }}
-      >
+      <h5 className="text-white text-center rounded p-3 text-uppercase fw-bold" style={{ backgroundColor: "#0B2343" }}>
         Education
       </h5>
       <div className="container">
-        {educationData &&
-          educationData.map((education) => (
+        {educations &&
+          educations.map((education) => (
             <div key={education.id}>
               <div className="d-flex" style={{ color: "#67c5e5" }}>
                 <h3>{education.university.name}&nbsp;</h3>
