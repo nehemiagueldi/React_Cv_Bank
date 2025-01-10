@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { createMarkup, getCVPersonData } from "../../service/CVBank";
+import { createMarkup } from "../../service/CVBank";
 
-const Training = () => {
-  let [trainingData, setTrainingData] = useState(null);
+const Training = ({ trainingData }) => {
+  let [trainings, setTrainings] = useState(null);
   useEffect(() => {
-    let getTrainingDatas = async () => {
+    if (trainingData) {
       try {
-        let resultTraining = await getCVPersonData(1);
-        setTrainingData(resultTraining.trainings);
+        setTrainings(trainingData);
       } catch (error) {
         console.log(error);
       }
-    };
-    getTrainingDatas();
-  }, []);
+    }
+  }, [trainingData]);
   return (
     <>
       <div>
@@ -21,8 +19,8 @@ const Training = () => {
           Training
         </h5>
         <div className="container">
-          {trainingData &&
-            trainingData.map((training) => (
+          {trainings &&
+            trainings.map((training) => (
               <div key={training.id}>
                 <div className="d-flex">
                   <h4 className="fw-bold">{training.name}&nbsp;at&nbsp;</h4>

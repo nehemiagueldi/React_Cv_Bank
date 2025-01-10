@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../Footer";
 import Project from "../Project";
 import Training from "../Training";
@@ -6,8 +6,30 @@ import Skills from "../Skills";
 import Profile from "../Profile";
 import Education from "../Education";
 import WorkExp from "../WorkExp";
+import { getCVPersonData } from "../../service/CVBank";
 
 const CVBank = () => {
+  let [profileData, setProfileData] = useState(null);
+  let [skillsData, setSkillsData] = useState(null);
+  let [toolsData, setToolsData] = useState(null);
+  let [workExpData, setWorkExpData] = useState(null);
+  let [projectData, setProjectData] = useState(null);
+  let [trainingData, setTrainingData] = useState(null);
+  let [educationData, setEducationData] = useState(null);
+  useEffect(() => {
+    let getCVPerson = async () => {
+      let result = await getCVPersonData(1);
+      setProfileData(result.cvPerson);
+      setSkillsData(result.cvSkills);
+      setToolsData(result.cvTools);
+      setWorkExpData(result.workExps);
+      setProjectData(result.projects);
+      setTrainingData(result.trainings);
+      setEducationData(result.educations);
+      console.log(result);
+    };
+    getCVPerson();
+  }, []);
   return (
     <>
       <div
@@ -23,17 +45,17 @@ const CVBank = () => {
           </div>
           <div className="bg-white bg-opacity-75 p-3">
             {/* Profile */}
-            <Profile/>
+            <Profile profileData={profileData} />
             {/* Skills */}
-            <Skills/>
+            <Skills skillsData={skillsData} toolsData={toolsData} />
             {/* Profesional Experiences */}
-            <WorkExp />
+            <WorkExp workExpData={workExpData} />
             {/* Projects */}
-            <Project/>
+            <Project projectData={projectData} />
             {/* Training */}
-            <Training/>
+            <Training trainingData={trainingData} />
             {/* Education */}
-            <Education />
+            <Education educationData={educationData} />
             <Footer />
           </div>
         </div>
