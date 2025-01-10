@@ -12,7 +12,6 @@ const Profile = () => {
     let getCVPerson = async () => {
       try {
         let result = await getCVPersonData(1);
-        console.log(result);
         setNamePerson(result.cvPerson.person.name);
         setGenderPerson(result.cvPerson.person.gender);
         setBirthDatePerson(result.cvPerson.person.birthdate);
@@ -28,7 +27,10 @@ const Profile = () => {
   return (
     <>
       <div>
-        <h5 className="text-white text-center rounded p-3 text-uppercase fw-bold" style={{ backgroundColor: "#0B2343" }}>
+        <h5
+          className="text-white text-center rounded p-3 text-uppercase fw-bold"
+          style={{ backgroundColor: "#0B2343" }}
+        >
           Profile
         </h5>
         <div className="container row align-items-center">

@@ -45,6 +45,24 @@ export let getTrainingData = async () => {
   }
 };
 
+export const getEducationDatas = async () => {
+  try {
+    const response = await axios.get("http://localhost:8080/api/education");
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getWorkExpDatas = async () => {
+  try {
+    const response = await axios.get("http://localhost:8080/api/work-exp");
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export function createMarkup(data) {
   return { __html: data };
 }
@@ -55,9 +73,14 @@ export function formatDate(cvdate) {
   return date.toLocaleString("en-US", options);
 }
 
+export function formatDateEdu(eduDate) {
+  let date = new Date(eduDate).getFullYear();
+  return date;
+  
 export function calculateAge(birthDate) {
   let currentDate = new Date().getFullYear();
   let date = new Date(birthDate).getFullYear();
   let resultDate = currentDate - date;
   return resultDate;
+  
 }
