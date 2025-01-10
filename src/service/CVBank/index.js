@@ -54,3 +54,10 @@ export function formatDate(cvdate) {
   let options = { month: "short", year: "numeric" };
   return date.toLocaleString("en-US", options);
 }
+
+export function calculateAge(birthDate) {
+  let currentDate = new Date().getFullYear();
+  let date = new Date(birthDate).getFullYear();
+  let resultDate = currentDate - date;
+  return resultDate;
+}

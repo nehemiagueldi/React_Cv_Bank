@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { createMarkup, formatDate, getTrainingData } from "../../service/CVBank";
+import { createMarkup, getCVPersonData } from "../../service/CVBank";
 
 const Training = () => {
-  let [responseData, setResponseData] = useState(null);
+  let [trainingData, setTrainingData] = useState(null);
   useEffect(() => {
     let getTrainingDatas = async () => {
       try {
-        let result = await getTrainingData();
-        setResponseData(result);
+        let resultTraining = await getCVPersonData(1);
+        setTrainingData(resultTraining.trainings);
       } catch (error) {
         console.log(error);
       }
@@ -21,17 +21,17 @@ const Training = () => {
           Training
         </h5>
         <div className="container">
-          {responseData &&
-            responseData.map((training) => (
+          {trainingData &&
+            trainingData.map((training) => (
               <div key={training.id}>
                 <div className="d-flex">
-                  <h2 className="fw-bold">{training.company}&nbsp;-&nbsp;</h2>
-                  <h2 className="fw-bold">{training.name}</h2>
+                  <h4 className="fw-bold">{training.name}&nbsp;at&nbsp;</h4>
+                  <h4 className="fw-bold">{training.company}</h4>
                 </div>
-                <div className="d-flex">
-                  <h4 className="fw-bold">{formatDate(training.start_date)}&nbsp;-&nbsp;</h4>
-                  <h4 className="fw-bold">{formatDate(training.end_date)}</h4>
-                </div>
+                {/* <div className="d-flex">
+                  <h5 className="fw-bold">{formatDate(training.start_date)}&nbsp;-&nbsp;</h5>
+                  <h5 className="fw-bold">{formatDate(training.end_date)}</h5>
+                </div> */}
                 <div dangerouslySetInnerHTML={createMarkup(training.description)}></div>
               </div>
             ))}
