@@ -11,7 +11,6 @@ const Profile = () => {
     let selectedCVPerson = async () => {
       try {
         let result = await getCVPersonData(1);
-        console.log(result);
         setNamePerson(result.cvPerson.person.name);
         setGenderPerson(result.cvPerson.person.gender);
         setPositionPerson(result.cvPerson.position);
@@ -26,19 +25,30 @@ const Profile = () => {
   return (
     <>
       <div>
-        <h5 className="text-white text-center rounded p-3 text-uppercase fw-bold" style={{ backgroundColor: "#0B2343" }}>
+        <h5
+          className="text-white text-center rounded p-3 text-uppercase fw-bold"
+          style={{ backgroundColor: "#0B2343" }}
+        >
           Profile
         </h5>
         <div className="container row align-items-center">
           <div className="col">
             <h2>{namePerson}</h2>
-            <h4>{genderPerson === "M" ? "Male" : "Female"}, 24 y/o</h4>
+            <h4>{genderPerson === "M" ? "Male" : "Female"}, y/o</h4>
             <h4 className="mb-5">{positionPerson}</h4>
           </div>
           <div className="col text-end">
             <img
-              src={photoPerson === null ? "https://res.cloudinary.com/debojimrw/image/upload/v1736410512/default_go00tp.jpg" : photoPerson}
-              alt={photoPerson === null ? "Default profile picture" : "Profile picture of the user"}
+              src={
+                photoPerson === null || photoPerson === ""
+                  ? "https://res.cloudinary.com/debojimrw/image/upload/v1736410512/default_go00tp.jpg"
+                  : photoPerson
+              }
+              alt={
+                photoPerson === null
+                  ? "Default profile picture"
+                  : "Profile picture User"
+              }
               style={{
                 width: "35%",
                 height: "35%",

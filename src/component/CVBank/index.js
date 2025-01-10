@@ -4,6 +4,8 @@ import Project from "../Project";
 import Training from "../Training";
 import Skills from "../Skills";
 import Profile from "../Profile";
+import Education from "../Education";
+import WorkExp from "../WorkExp";
 
 const CVBank = () => {
   return (
@@ -25,21 +27,13 @@ const CVBank = () => {
             {/* Skills */}
             <Skills/>
             {/* Profesional Experiences */}
-            <div>
-              <h5 className="text-white text-center rounded p-3 text-uppercase fw-bold" style={{ backgroundColor: "#0B2343" }}>
-                Profesional Experiences
-              </h5>
-            </div>
+            <WorkExp />
             {/* Projects */}
             <Project/>
             {/* Training */}
             <Training/>
             {/* Education */}
-            <div>
-              <h5 className="text-white text-center rounded p-3 text-uppercase fw-bold" style={{ backgroundColor: "#0B2343" }}>
-                Education
-              </h5>
-            </div>
+            <Education />
             <Footer />
           </div>
         </div>
