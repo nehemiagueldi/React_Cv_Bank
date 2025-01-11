@@ -1,5 +1,14 @@
 import axios from "axios";
 
+export let getListCVPerson = async () => {
+  try {
+    let response = await axios.get("http://localhost:8080/api/cv-person");
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export let getCVPersonData = async (id) => {
   try {
     let response = await axios.get("http://localhost:8080/api/cv-person/" + id);
@@ -52,7 +61,7 @@ export const getEducationDatas = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getWorkExpDatas = async () => {
   try {
@@ -61,7 +70,7 @@ export const getWorkExpDatas = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export function createMarkup(data) {
   return { __html: data };
@@ -77,7 +86,7 @@ export function formatDateEdu(eduDate) {
   let date = new Date(eduDate).getFullYear();
   return date;
 }
-  
+
 export function calculateAge(birthDate) {
   let currentDate = new Date().getFullYear();
   let date = new Date(birthDate).getFullYear();
