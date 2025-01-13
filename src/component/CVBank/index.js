@@ -7,6 +7,7 @@ import Profile from "../Profile";
 import Education from "../Education";
 import WorkExp from "../WorkExp";
 import { getCVPersonData } from "../../service/CVBank";
+import { useParams } from "react-router";
 
 const CVBank = () => {
   let [profileData, setProfileData] = useState(null);
@@ -16,9 +17,10 @@ const CVBank = () => {
   let [projectData, setProjectData] = useState(null);
   let [trainingData, setTrainingData] = useState(null);
   let [educationData, setEducationData] = useState(null);
+  let { id } = useParams();
   useEffect(() => {
     let getCVPerson = async () => {
-      let result = await getCVPersonData(1);
+      let result = await getCVPersonData(id);
       setProfileData(result.cvPerson);
       setSkillsData(result.cvSkills);
       setToolsData(result.cvTools);
@@ -29,7 +31,7 @@ const CVBank = () => {
       console.log(result);
     };
     getCVPerson();
-  }, []);
+  }, [id]);
   return (
     <>
       <div

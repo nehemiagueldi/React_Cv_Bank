@@ -10,7 +10,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/cv" element={<CVBank />} />
+        <Route path="/cv/:id" element={<CVBank />} />
       </Routes>
     </BrowserRouter>
   </>
