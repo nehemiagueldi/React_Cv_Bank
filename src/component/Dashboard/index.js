@@ -31,24 +31,23 @@ const Dashboard = () => {
     { title: "Name", data: "person.name" },
     { title: "Position", data: "position" },
     {
-      title: "Action",
-      data: null,
-      render: (row) =>
-        `
-          <button class="btn btn-md btn-warning" onclick="alert('Selected: ${row.person.name}')">Edit</button>
-          <button class="btn btn-md btn-danger" onclick="alert('Selected: ${row.person.name}')">Delete</button>
-        `,
-    },
-    {
       title: "CV",
       data: null,
-      render: (row) => `<button class="btn btn-md btn-primary" onclick="alert('Selected: ${row.person.name}')">View CV</button>`,
+      render: (row) => `<a class="btn btn-md btn-primary" href="/cv/${row.id}">View CV</a>`,
     },
   ];
   return (
     <>
       <div className="container">
-        <DataTable data={profile} columns={columns} className="display" />
+        <DataTable data={profile} columns={columns} className="display">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Position</th>
+              <th>CV</th>
+            </tr>
+          </thead>
+        </DataTable>
       </div>
     </>
   );
