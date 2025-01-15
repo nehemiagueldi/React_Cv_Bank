@@ -30,24 +30,31 @@ const Dashboard = () => {
     },
     { title: "Name", data: "person.name" },
     { title: "Position", data: "position" },
+    { title: "Major", data: "person.birthdate" },
     {
       title: "CV",
       data: null,
-      render: (row) => `<a class="btn btn-md btn-primary" href="/cv/${row.id}">View CV</a>`,
+      render: (row) =>
+        `
+          <a class="btn btn-md btn-primary" href="/cv/${row.randomString}">View CV</a>
+          <a class="btn btn-md btn-warning" href="/user/${row.randomString}">Edit CV</a>
+        `,
     },
   ];
   return (
     <>
       <div className="container">
-        <DataTable data={profile} columns={columns} className="display">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Position</th>
-              <th>CV</th>
-            </tr>
-          </thead>
-        </DataTable>
+        <div className="table-responsive shadow bg-light p-3">
+          <DataTable data={profile} columns={columns} className="display table table-sm align-middle table-light table-hover table-striped">
+            <thead className="table-dark">
+              <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>CV</th>
+              </tr>
+            </thead>
+          </DataTable>
+        </div>
       </div>
     </>
   );

@@ -9,9 +9,18 @@ export let getListCVPerson = async () => {
   }
 };
 
-export let getCVPersonData = async (id) => {
+export let getCVPersonData = async (randomString) => {
   try {
-    let response = await axios.get("http://localhost:8080/api/cv-person/" + id);
+    let response = await axios.get("http://localhost:8080/api/cv-person/" + randomString);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export let postCVPersonData = async (randomString) => {
+  try {
+    let response = await axios.put("http://localhost:8080/api/cv-person/" + randomString);
     return response.data;
   } catch (error) {
     console.log(error);
