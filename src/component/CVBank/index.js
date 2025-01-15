@@ -17,10 +17,10 @@ const CVBank = () => {
   let [projectData, setProjectData] = useState(null);
   let [trainingData, setTrainingData] = useState(null);
   let [educationData, setEducationData] = useState(null);
-  let { id } = useParams();
+  let { randomString } = useParams();
   useEffect(() => {
     let getCVPerson = async () => {
-      let result = await getCVPersonData(id);
+      let result = await getCVPersonData(randomString);
       setProfileData(result.cvPerson);
       setSkillsData(result.cvSkills);
       setToolsData(result.cvTools);
@@ -31,15 +31,16 @@ const CVBank = () => {
       console.log(result);
     };
     getCVPerson();
-  }, [id]);
+  }, [randomString]);
   return (
     <>
       <div
         className="d-flex flex-column"
         style={{
           backgroundImage: "url(https://res.cloudinary.com/dpuqafk1w/image/upload/v1735032859/Mas_Naufal_CV_wdtxhm.jpg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundSize: "contain",
+          backgroundPosition: "bottom",
+          backgroundRepeat: "repeat",
         }}>
         <div className="container">
           <div className="text-end py-2">
@@ -58,7 +59,8 @@ const CVBank = () => {
             <Training trainingData={trainingData} />
             {/* Education */}
             <Education educationData={educationData} />
-            <Footer />
+            <hr />
+            <div>&copy; {new Date().getFullYear()} PT Bumi Amartha Teknologi Mandiri - All Rights Reserved</div>
           </div>
         </div>
       </div>
