@@ -3,7 +3,7 @@ import axios from "axios";
 export let getListCVPerson = async () => {
   try {
     let response = await axios.get("http://localhost:8080/api/cv-person");
-    return response.data.data;
+    return response.data;
   } catch (error) {
     console.log(error);
   }
@@ -18,10 +18,9 @@ export let getCVPersonData = async (randomString) => {
   }
 };
 
-export let postCVPersonData = async (randomString) => {
+export let postCVPersonData = async (randomString, data) => {
   try {
-    let response = await axios.put("http://localhost:8080/api/cv-person/" + randomString);
-    return response.data;
+    await axios.put(`http://localhost:8080/api/cv-person/edit/${randomString}`, data);
   } catch (error) {
     console.log(error);
   }
@@ -39,6 +38,24 @@ export let getCVSkillData = async () => {
 export let getCVToolData = async () => {
   try {
     let response = await axios.get("http://localhost:8080/api/cv-tool");
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export let getSkillData = async () => {
+  try {
+    let response = await axios.get("http://localhost:8080/api/skill");
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export let getToolData = async () => {
+  try {
+    let response = await axios.get("http://localhost:8080/api/tool");
     return response.data.data;
   } catch (error) {
     console.log(error);
