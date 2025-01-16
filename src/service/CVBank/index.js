@@ -3,24 +3,15 @@ import axios from "axios";
 export let getListCVPerson = async () => {
   try {
     let response = await axios.get("http://localhost:8080/api/cv-person");
-    return response.data.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export let getCVPersonData = async (randomString) => {
-  try {
-    let response = await axios.get("http://localhost:8080/api/cv-person/" + randomString);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export let postCVPersonData = async (randomString) => {
+export let getCVPersonData = async (id) => {
   try {
-    let response = await axios.put("http://localhost:8080/api/cv-person/" + randomString);
+    let response = await axios.get("http://localhost:8080/api/cv-person/" + id);
     return response.data;
   } catch (error) {
     console.log(error);
