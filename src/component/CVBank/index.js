@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../Footer";
 import Project from "../Project";
 import Training from "../Training";
 import Skills from "../Skills";
@@ -59,7 +58,6 @@ const CVBank = () => {
             <Training trainingData={trainingData} />
             {/* Education */}
             <Education educationData={educationData} />
-            <hr />
             <div>&copy; {new Date().getFullYear()} PT Bumi Amartha Teknologi Mandiri - All Rights Reserved</div>
           </div>
         </div>
