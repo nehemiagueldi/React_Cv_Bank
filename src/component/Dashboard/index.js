@@ -28,33 +28,50 @@ const Dashboard = () => {
         return meta.row + 1;
       },
     },
-    { title: "Name", data: "person.name" },
-    { title: "Position", data: "position" },
-    { title: "Major", data: "person.birthdate" },
+    { title: "Name", data: "cvPerson.person.name" },
+    { title: "Position", data: "cvPerson.position" },
+    { title: "Age", data: "age" },
+    { title: "Experience", data: "totalExperience" },
+    {
+      title: "Skill",
+      data: "cvSkills",
+      render: function (data) {
+        if (Array.isArray(data)) {
+          return data.map((cvSkill) => cvSkill.skill.name).join(", ");
+        }
+        return "";
+      },
+    },
+    {
+      title: "Major",
+      data: "educations",
+      render: function (data) {
+        if (Array.isArray(data)) {
+          return data.map((edu) => edu.major.name).join(", ");
+        }
+        return "";
+      },
+    },
     {
       title: "CV",
       data: null,
       render: (row) =>
-        `
-          <a class="btn btn-md btn-primary" href="/cv/${row.randomString}">View CV</a>
-          <a class="btn btn-md btn-warning" href="/user/${row.randomString}">Edit CV</a>
-        `,
+        `<a class="btn btn-md btn-primary" href="/cv/${row.cvPerson.randomString}">View CV</a>`,
     },
   ];
+  
   return (
     <>
       <div className="container">
-        <div className="table-responsive shadow bg-light p-3">
-          <DataTable data={profile} columns={columns} className="display table table-sm align-middle table-light table-hover table-striped">
-            <thead className="table-dark">
-              <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>CV</th>
-              </tr>
-            </thead>
-          </DataTable>
-        </div>
+        <DataTable data={profile} columns={columns} className="display">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Position</th>
+              <th>CV</th>
+            </tr>
+          </thead>
+        </DataTable>
       </div>
     </>
   );
