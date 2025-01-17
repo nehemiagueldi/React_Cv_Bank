@@ -18,10 +18,6 @@ export let getCVPersonData = async (randomString) => {
   }
 };
 
-export let getCVPersonData = async (id) => {
-  try {
-    let response = await axios.get("http://localhost:8080/api/cv-person/" + id);
-    return response.data;
 export let postCVPersonData = async (randomString, data) => {
   try {
     await axios.put(`http://localhost:8080/api/cv-person/edit/${randomString}`, data);

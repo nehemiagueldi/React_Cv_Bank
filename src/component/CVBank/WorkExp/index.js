@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createMarkup, formatDate } from "../../service/CVBank";
+import { createMarkup, formatDate } from "../../../service/CVBank";
 
 const WorkExp = ({ workExpData }) => {
   const [workExps, setWorkExps] = useState(null);

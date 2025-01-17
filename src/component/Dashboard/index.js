@@ -56,10 +56,15 @@ const Dashboard = () => {
       title: "CV",
       data: null,
       render: (row) =>
-        `<a class="btn btn-md btn-primary" href="/cv/${row.cvPerson.randomString}">View CV</a>`,
+        `
+        <div class="d-flex gap-2">
+        <a class="btn btn-md btn-primary" href="/cv/${row.cvPerson.randomString}">View</a>
+        <a class="btn btn-md btn-warning" href="/user/${row.cvPerson.randomString}">Edit</a>
+        </div>
+      `,
     },
   ];
-  
+
   return (
     <>
       <div className="container">
