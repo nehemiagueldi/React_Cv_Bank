@@ -62,6 +62,15 @@ export let getToolData = async () => {
   }
 };
 
+export const getWorkExpDatas = async () => {
+  try {
+    const response = await axios.get("http://localhost:8080/api/work-exp");
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export let getProjectData = async () => {
   try {
     let response = await axios.get("http://localhost:8080/api/project");
@@ -80,7 +89,34 @@ export let getTrainingData = async () => {
   }
 };
 
-export const getEducationDatas = async () => {
+export const getDegreeData = async () => {
+  try {
+    const response = await axios.get("http://localhost:8080/api/degree");
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getFacultyData = async () => {
+  try {
+    const response = await axios.get("http://localhost:8080/api/faculty");
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getMajorData = async () => {
+  try {
+    const response = await axios.get("http://localhost:8080/api/major");
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getEducationData = async () => {
   try {
     const response = await axios.get("http://localhost:8080/api/education");
     return response.data.data;
@@ -89,14 +125,13 @@ export const getEducationDatas = async () => {
   }
 };
 
-export const getWorkExpDatas = async () => {
+export const uploadPhotoProfile = async () => {
   try {
-    const response = await axios.get("http://localhost:8080/api/work-exp");
-    return response.data.data;
+    
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export function createMarkup(data) {
   return { __html: data };

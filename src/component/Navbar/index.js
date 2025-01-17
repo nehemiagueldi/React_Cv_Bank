@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div className="pb-4 mb-5">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow ">
+      <nav className={`navbar navbar-expand-lg navbar-light bg-light fixed-top ${scrolled ? "shadow" : "shadow-sm"}`} style={{ transition: 'ease', transitionDuration: "0.3s" }}>
         <div className="container">
           <a className="navbar-brand" href="/">
-            <img src="https://res.cloudinary.com/dpuqafk1w/image/upload/v1735014395/8ASEV77SME3B6QXCXK6XALAX5R7SK5CWSB6NHPEF-609b611e_bd48vi.png" alt="AMARTEK" width="100" height="24"/>
+            <img src="https://res.cloudinary.com/dpuqafk1w/image/upload/v1735014395/8ASEV77SME3B6QXCXK6XALAX5R7SK5CWSB6NHPEF-609b611e_bd48vi.png" alt="AMARTEK" width="100" height="24" />
           </a>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav m-auto mb-2 mb-lg-0">
