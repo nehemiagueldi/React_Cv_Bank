@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { getCVPersonData, getSkillData, getToolData, postCVPersonData } from "../../service/CVBank";
+import { getCVPersonData, getDegreeData, getFacultyData, getMajorData, getSkillData, getToolData, postCVPersonData } from "../../service/CVBank";
 import ProfileUser from "./Profile";
 import SkillsUser from "./Skills";
 import WorkExpUser from "./WorkExp";
 import ProjectUser from "./Project";
 import TrainingUser from "./Training";
+import EducationUser from "./Education";
 
 const User = () => {
   let [name, setName] = useState(null);
   let [position, setPosition] = useState(null);
   let [summary, setSummary] = useState(null);
+  let [photoProfile, setPhotoProfile] = useState(null);
   let [skillsList, setSkillsList] = useState(null);
   let [skillsDefault, setSkillsDefault] = useState(null);
   let [toolsList, setToolsList] = useState(null);
@@ -18,6 +20,9 @@ const User = () => {
   let [workExp, setWorkExp] = useState(null);
   let [projects, setProjects] = useState(null);
   let [trainings, setTrainings] = useState(null);
+  let [degreesList, setDegreesList] = useState(null);
+  let [facultysList, setFacultysList] = useState(null);
+  let [majorsList, setMajorsList] = useState(null);
   let [educations, setEducations] = useState(null);
   let { randomString } = useParams();
   let navigate = useNavigate();
@@ -27,9 +32,13 @@ const User = () => {
         let result = await getCVPersonData(randomString);
         let skillList = await getSkillData();
         let toolList = await getToolData();
+        let degreeList = await getDegreeData();
+        let facultyList = await getFacultyData();
+        let majorList = await getMajorData();
         setName(result.cvPerson.person.name);
         setPosition(result.cvPerson.position);
         setSummary(result.cvPerson.summary);
+        setPhotoProfile(result.cvPerson.photo_profile)
         let formattedSkills = skillList.map((skill) => ({
           // List Skills
           value: skill.id,
@@ -57,6 +66,9 @@ const User = () => {
         setWorkExp(result.workExps);
         setProjects(result.projects);
         setTrainings(result.trainings);
+        setDegreesList(degreeList);
+        setFacultysList(facultyList);
+        setMajorsList(majorList);
         setEducations(result.educations);
         console.log(result);
         console.log(skillList);
@@ -83,14 +95,24 @@ const User = () => {
     <>
       <div className="container">
         <form className="row g-3" onSubmit={handleSubmit}>
-          <ProfileUser name={name} setName={setName} position={position} setPosition={setPosition} summary={summary} setSummary={setSummary} />
+          <ProfileUser name={name} setName={setName} position={position} setPosition={setPosition} summary={summary} setSummary={setSummary} photoProfile={photoProfile} setPhotoProfile={setPhotoProfile} />
           <SkillsUser skillsList={skillsList} toolsList={toolsList} skillsDefault={skillsDefault} toolsDefault={toolsDefault} setSkillsDefault={setSkillsDefault} setToolsDefault={setToolsDefault} />
-          <WorkExpUser workExpData={workExp}/>
+          <WorkExpUser workExpData={workExp} />
           <ProjectUser projectsData={projects} />
           <TrainingUser trainingData={trainings} />
-          <div className="col-12">
-            <button type="submit" className="btn btn-primary">
+          <EducationUser degreeList={degreesList} facultyList={facultysList} majorList={majorsList} educationData={educations} />
+          <div className="col-12 d-flex gap-2">
+            <button type="submit" className="btn btn-success">
               Update
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = "/";
+              }}
+              className="btn btn-danger">
+              Cancel
             </button>
           </div>
         </form>
