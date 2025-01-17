@@ -1,17 +1,33 @@
 import axios from "axios";
 
-export let getListCVPerson = async () => {
+export let getListCVPerson = async (search = "") => {
   try {
-    let response = await axios.get("http://localhost:8080/api/cv-person");
-    return response.data;
+    let response = await axios.get("http://localhost:8080/api/cv-person", {
+      headers: {
+        "ngrok-skip-browser-warning": "true",
+      },
+      params: {
+        search: search, 
+      },
+    });
+    return response.data.data;
   } catch (error) {
     console.log(error);
+    return { error: "Failed to fetch data" };
   }
 };
 
-export let getCVPersonData = async (id) => {
+export let getCVPersonData = async (randomString) => {
   try {
-    let response = await axios.get("http://localhost:8080/api/cv-person/" + id);
+    let response = await axios.get(
+      "https://moving-dane-informally.ngrok-free.app/api/cv-person/" +
+        randomString,
+      {
+        headers: {
+          "ngrok-skip-browser-warning": "true",
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.log(error);

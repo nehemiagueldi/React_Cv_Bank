@@ -6,19 +6,22 @@ import { getListCVPerson } from "../../service/CVBank";
 DataTable.use(DT);
 
 const Dashboard = () => {
-  let [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const getCVPersonData = async (search = "") => {
+    try {
+      const result = await getListCVPerson(search);
+      setProfile(result);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    let getCVPersonData = async () => {
-      try {
-        let result = await getListCVPerson();
-        setProfile(result);
-        console.log(result);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCVPersonData();
-  }, []);
+    getCVPersonData(searchTerm);
+  }, [searchTerm]);
 
   const columns = [
     {
@@ -56,14 +59,39 @@ const Dashboard = () => {
       title: "CV",
       data: null,
       render: (row) =>
-        `<a class="btn btn-md btn-primary" href="/cv/${row.cvPerson.randomString}">View CV</a>`,
+        `
+        <div class="d-flex gap-2">
+        <a class="btn btn-md btn-primary" href="/cv/${row.cvPerson.randomString}">View</a>
+        <a class="btn btn-md btn-warning" href="/user/${row.cvPerson.randomString}">Edit</a>
+        </div>
+      `,
     },
   ];
-  
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   return (
     <>
       <div className="container">
-        <DataTable data={profile} columns={columns} className="display">
+        <div id="datatable-search-wrapper" className="mb-3">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            placeholder="Search CVs"
+            className="form-control"
+          />
+        </div>
+        <DataTable
+          data={profile}
+          columns={columns}
+          options={{
+            searching: false,
+          }}
+          className="display"
+        >
           <thead>
             <tr>
               <th>Name</th>
