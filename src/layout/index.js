@@ -5,11 +5,13 @@ import Footer from "../component/Footer";
 let Layout = () => {
   return (
     <>
-      <div>
+      <div className="d-flex flex-column min-vh-100">
         <Navbar />
 
-        <Outlet />
-        
+        <div className="flex-grow-1">
+          <Outlet />
+        </div>
+
         <Footer />
       </div>
     </>
