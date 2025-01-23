@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createMarkup } from "../../../service/CVBank";
+import { createMarkup } from "../../service/CVBank";
 
 const Training = ({ trainingData }) => {
   let [trainings, setTrainings] = useState(null);

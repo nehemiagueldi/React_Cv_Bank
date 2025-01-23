@@ -1,25 +1,9 @@
-import React, { useEffect, useState } from "react";
 import DataTable from "datatables.net-react";
 import DT from "datatables.net-dt";
-import { getListCVPerson } from "../../service/CVBank";
 
 DataTable.use(DT);
 
 const Dashboard = () => {
-  let [profile, setProfile] = useState(null);
-  useEffect(() => {
-    let getCVPersonData = async () => {
-      try {
-        let result = await getListCVPerson();
-        setProfile(result);
-        console.log(result);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCVPersonData();
-  }, []);
-
   const columns = [
     {
       title: "#",
@@ -28,28 +12,16 @@ const Dashboard = () => {
         return meta.row + 1;
       },
     },
-    { title: "Name", data: "cvPerson.person.name" },
-    { title: "Position", data: "cvPerson.position" },
-    { title: "Age", data: "age" },
-    { title: "Experience", data: "totalExperience" },
+    { title: "Name", data: "person.name" },
+    { title: "Position", data: "position" },
     {
-      title: "Skill",
-      data: "cvSkills",
-      render: function (data) {
-        if (Array.isArray(data)) {
-          return data.map((cvSkill) => cvSkill.skill.name).join(", ");
-        }
-        return "";
-      },
-    },
-    {
-      title: "Major",
-      data: "educations",
-      render: function (data) {
-        if (Array.isArray(data)) {
-          return data.map((edu) => edu.major.name).join(", ");
-        }
-        return "";
+      title: "Gender",
+      render: function (data, type, row) {
+        return row.person.gender === "M"
+          ? "Male"
+          : row.person.gender === "F"
+          ? "Female"
+          : "Unknown";
       },
     },
     {
@@ -58,8 +30,8 @@ const Dashboard = () => {
       render: (row) =>
         `
         <div class="d-flex gap-2">
-        <a class="btn btn-md btn-primary" href="/cv/${row.cvPerson.randomString}">View</a>
-        <a class="btn btn-md btn-warning" href="/user/${row.cvPerson.randomString}">Edit</a>
+        <a class="btn btn-md btn-primary" href="/cv/${row.randomString}">View</a>
+        <a class="btn btn-md btn-warning" href="/user/${row.randomString}">Edit</a>
         </div>
       `,
     },
@@ -68,11 +40,28 @@ const Dashboard = () => {
   return (
     <>
       <div className="container">
-        <DataTable data={profile} columns={columns} className="display">
+        <DataTable
+          ajax={{
+            url: "http://localhost:8080/api/cv-person",
+            type: "GET",
+            data: function (d) {
+              d.search = d.search.value || "";
+            },
+            dataSrc: "data",
+          }}
+          columns={columns}
+          options={{
+            serverSide: true,
+            processing: true,
+            searching: true,
+          }}
+          className="display"
+        >
           <thead>
             <tr>
               <th>Name</th>
               <th>Position</th>
+              <th>Gender</th>
               <th>CV</th>
             </tr>
           </thead>

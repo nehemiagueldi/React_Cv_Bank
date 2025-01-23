@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { formatDateEdu } from "../../../service/CVBank";
+import { formatDateEdu } from "../../service/CVBank";
 
 const Education = ({ educationData }) => {
   const [educations, setEducations] = useState(null);

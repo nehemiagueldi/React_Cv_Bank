@@ -1,32 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <div className="pb-4 mb-5">
-      <nav className={`navbar navbar-expand-lg navbar-light bg-light fixed-top ${scrolled ? "shadow" : "shadow-sm"}`} style={{ transition: 'ease', transitionDuration: "0.3s" }}>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow ">
         <div className="container">
           <a className="navbar-brand" href="/">
-            <img src="https://res.cloudinary.com/dpuqafk1w/image/upload/v1735014395/8ASEV77SME3B6QXCXK6XALAX5R7SK5CWSB6NHPEF-609b611e_bd48vi.png" alt="AMARTEK" width="100" height="24" />
+            CV Bank
           </a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav m-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <a className="nav-link active" aria-current="page" href="/">
                   Home

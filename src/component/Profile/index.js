@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { calculateAge } from "../../../service/CVBank";
+import { calculateAge } from "../../service/CVBank";
 
 const Profile = ({ profileData }) => {
   let [namePerson, setNamePerson] = useState(null);

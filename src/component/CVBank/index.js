@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Project from "./Project";
-import Training from "./Training";
-import Skills from "./Skills";
-import Profile from "./Profile";
-import Education from "./Education";
-import WorkExp from "./WorkExp";
+import Footer from "../Footer";
+import Project from "../Project";
+import Training from "../Training";
+import Skills from "../Skills";
+import Profile from "../Profile";
+import Education from "../Education";
+import WorkExp from "../WorkExp";
 import { getCVPersonData } from "../../service/CVBank";
 import { useParams } from "react-router";
 
@@ -58,6 +59,7 @@ const CVBank = () => {
             <Training trainingData={trainingData} />
             {/* Education */}
             <Education educationData={educationData} />
+            <hr />
             <div>&copy; {new Date().getFullYear()} PT Bumi Amartha Teknologi Mandiri - All Rights Reserved</div>
           </div>
         </div>
