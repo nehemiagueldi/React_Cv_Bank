@@ -8,7 +8,7 @@ let Layout = () => {
       <div className="d-flex flex-column min-vh-100">
         <Navbar />
 
-        <div className="flex-grow-1">
+        <div className="my-5 flex-grow-1 min-vh-50">
           <Outlet />
         </div>
 

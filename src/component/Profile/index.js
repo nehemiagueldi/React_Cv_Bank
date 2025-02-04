@@ -25,21 +25,33 @@ const Profile = ({ profileData }) => {
   return (
     <>
       <div>
-        <h5 className="text-white text-center rounded p-3 text-uppercase fw-bold" style={{ backgroundColor: "#0B2343" }}>
-          Profile
+        <h5
+          className="text-white text-center rounded p-3 text-uppercase fw-bold"
+          style={{ backgroundColor: "#0B2343" }}
+        >
+          PROFILE
         </h5>
         <div className="container row align-items-center">
           <div className="col">
             <h2>{namePerson}</h2>
             <h4>
-              {genderPerson === "M" ? "Male" : "Female"}, {calculateAge(birthDatePerson)} y/o
+              {genderPerson === "M" ? "Male" : "Female"},{" "}
+              {calculateAge(birthDatePerson)} y/o
             </h4>
             <h4>{positionPerson}</h4>
           </div>
           <div className="col text-end">
             <img
-              src={photoPerson === null ? "https://res.cloudinary.com/debojimrw/image/upload/v1736410512/default_go00tp.jpg" : photoPerson}
-              alt={photoPerson === null ? "Default profile picture" : "Profile picture User"}
+              src={
+                photoPerson === null
+                  ? "https://res.cloudinary.com/debojimrw/image/upload/v1736410512/default_go00tp.jpg"
+                  : photoPerson
+              }
+              alt={
+                photoPerson === null
+                  ? "Default profile picture"
+                  : "Profile picture User"
+              }
               style={{
                 width: "35%",
                 height: "35%",
