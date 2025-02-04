@@ -1,0 +1,17 @@
+.btn-custom {
+  color: white;
+  background-color: #0B2343;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-custom:hover {
+  color: white;
+  background-color: #123a66; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn-custom:active {
+  background-color: #092132;
+  transform: scale(0.95);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
