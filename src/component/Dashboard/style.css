@@ -1,0 +1,14 @@
+.dataTable tbody tr:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.dataTable tbody tr {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.dataTable tbody .btn {
+  background-color: transparent;
+  border-width: 0px;
+  padding: 0%;
+}

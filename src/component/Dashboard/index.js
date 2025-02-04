@@ -3,7 +3,6 @@ import DataTable from "datatables.net-react";
 import DT from "datatables.net-dt";
 import { getSkillData, getMajorData } from "../../service/CVBank";
 import $ from "jquery";
-import "./index.css";
 
 DataTable.use(DT);
 
