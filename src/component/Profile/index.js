@@ -40,23 +40,21 @@ const Profile = ({ profileData }) => {
             </h4>
             <h4>{positionPerson}</h4>
           </div>
-          <div className="col text-end">
+          <div
+            style={{
+              width: "250px",
+              height: "250px",
+            }}
+          >
             <img
               src={
                 photoPerson === null
                   ? "https://res.cloudinary.com/debojimrw/image/upload/v1736410512/default_go00tp.jpg"
                   : photoPerson
               }
-              alt={
-                photoPerson === null
-                  ? "Default profile picture"
-                  : "Profile picture User"
-              }
-              style={{
-                width: "35%",
-                height: "35%",
-              }}
-              className="rounded"
+              alt={namePerson}
+              className="w-100 h-100 rounded"
+              style={{ objectFit: "cover" }}
             />
           </div>
           <h4>Summary</h4>

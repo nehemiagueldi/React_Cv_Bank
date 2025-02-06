@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import { Card } from "react-bootstrap";
 import {
-  FaChevronCircleDown,
   FaChevronDown,
   FaChevronUp,
 } from "react-icons/fa";
@@ -12,13 +11,17 @@ const ProfileUser = ({
   name,
   position,
   summary,
+  gender,
+  birthDate,
   photoProfile,
   setName,
   setPosition,
   setSummary,
+  setGender,
+  setBirthDate,
   setPhotoProfile,
 }) => {
-  let [previewImage, setPreviewImage] = useState(photoProfile);
+  let [previewImage, setPreviewImage] = useState("");
 
   const [show, setShow] = useState(false);
 
@@ -33,6 +36,16 @@ const ProfileUser = ({
       setPhotoProfile(file);
     }
   };
+
+  const handleGenderChange = (event) => {
+    setGender(event.target.value); 
+  };
+
+  useEffect(() => {
+    console.log(photoProfile);
+    setPreviewImage(photoProfile);
+    console.log(previewImage);
+  })
 
   return (
     <>
@@ -66,6 +79,7 @@ const ProfileUser = ({
                             ? "https://res.cloudinary.com/debojimrw/image/upload/v1736410512/default_go00tp.jpg"
                             : previewImage
                         }
+                        alt={name}
                         className="w-100 h-100"
                         style={{ objectFit: "cover" }}
                       />
@@ -117,22 +131,28 @@ const ProfileUser = ({
                     <div className="row">
                       <div className="col-12 col-md-6 mb-3">
                         <label htmlFor="inputDate" className="form-label">
-                          Tanggal Lahir
+                          BirthDate
                         </label>
                         <input
                           type="date"
                           className="form-control"
                           id="inputDate"
+                          value={birthDate}
                         />
                       </div>
                       <div className="col-12 col-md-6 mb-3">
                         <label htmlFor="inputGender" className="form-label">
                           Gender
                         </label>
-                        <select className="form-control" id="inputGender">
+                        <select
+                          className="form-control"
+                          id="inputGender"
+                          value={gender}
+                          onChange={handleGenderChange}
+                        >
                           <option value="">Select Gender</option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
+                          <option value="M">Male</option>
+                          <option value="F">Female</option>
                         </select>
                       </div>
                     </div>
