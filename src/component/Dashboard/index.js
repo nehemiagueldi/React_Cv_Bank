@@ -24,7 +24,8 @@ const Dashboard = () => {
   });
 
   const [show, setShow] = useState(false);
-  const [activeId, setActiveId] = useState(0);
+  const [activeId, setActiveId] = useState(null);
+  const [showScroll, setShowScroll] = useState(false);
   const [skillData, setSkillData] = useState([]);
   const [majorData, setMajorData] = useState([]);
   const [universityData, setUniversityData] = useState([]);
@@ -48,7 +49,12 @@ const Dashboard = () => {
       let updatedValues = prevFilters[name];
 
       if (checked) {
-        if (name === "gender" || name === "experience" || name === "age" || name === "gpa") {
+        if (
+          name === "gender" ||
+          name === "experience" ||
+          name === "age" ||
+          name === "gpa"
+        ) {
           updatedValues = value;
         } else {
           updatedValues = [...prevFilters[name], value];
@@ -56,7 +62,7 @@ const Dashboard = () => {
       } else {
         if (name === "gender") {
           updatedValues = "";
-        } else if (name === "experience" || name === "age" || name === "gpa" ) {
+        } else if (name === "experience" || name === "age" || name === "gpa") {
           updatedValues = 0;
         } else {
           updatedValues = prevFilters[name].filter((item) => item !== value);
@@ -152,266 +158,268 @@ const Dashboard = () => {
     setShow(!show);
     setActiveId(id);
   };
+
   return (
-    <div className="container-fluid d-flex gap-5">
-      <div className="me-3 shadow-sm px-2 py-2 rounded">
-        <h3>Filters</h3>
+    <div className="container-fluid d-flex gap-5 px-5">
+      <div className={`me-3 shadow-sm p-3 rounded min-vh-50 filter-card show`}>
+        <h3 className="mb-3">Filters</h3>
 
-        {/* Gender */}
-        <div className="mb-2">
-          <button
-            className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExampleGender"
-            aria-expanded="false"
-            aria-controls="collapseExampleGender"
-            onClick={() => handleId(1)}
-          >
-            <span>Gender</span>
-            {show && activeId === 1 ? (
-              <FaChevronUp size={15} />
-            ) : (
-              <FaChevronDown size={15} />
-            )}
-          </button>
-
-          <div className="collapse" id="collapseExampleGender">
-            <div>
-              {["Male", "Female"].map((gender) => (
-                <div key={gender}>
-                  <input
-                    type="checkbox"
-                    name="gender"
-                    value={gender}
-                    onClick={handleFilterClick}
-                  />{" "}
-                  {gender}
-                </div>
-              ))}
+        <div className="d-flex flex-column gap-3">
+          {/* Gender */}
+          <div className="">
+            <button
+              className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExampleGender"
+              aria-expanded="false"
+              aria-controls="collapseExampleGender"
+              onClick={() => handleId(1)}
+            >
+              <span>Gender</span>
+              {show && activeId === 1 ? (
+                <FaChevronUp size={15} />
+              ) : (
+                <FaChevronDown size={15} />
+              )}
+            </button>
+            <div className="collapse" id="collapseExampleGender">
+              <div>
+                {["Male", "Female"].map((gender) => (
+                  <div key={gender}>
+                    <input
+                      type="checkbox"
+                      name="gender"
+                      value={gender}
+                      onClick={handleFilterClick}
+                    />{" "}
+                    {gender}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Experience */}
-        <div className="mb-2">
-          <button
-            className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExampleExperience"
-            aria-expanded="false"
-            aria-controls="collapseExampleExperience"
-            onClick={() => handleId(2)}
-          >
-            <span>Experience</span>
-            {show && activeId === 2 ? (
-              <FaChevronUp size={15} />
-            ) : (
-              <FaChevronDown size={15} />
-            )}
-          </button>
+          {/* Experience */}
+          <div className="">
+            <button
+              className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExampleExperience"
+              aria-expanded="false"
+              aria-controls="collapseExampleExperience"
+              onClick={() => handleId(2)}
+            >
+              <span>Experience</span>
+              {show && activeId === 2 ? (
+                <FaChevronUp size={15} />
+              ) : (
+                <FaChevronDown size={15} />
+              )}
+            </button>
 
-          <div className="collapse" id="collapseExampleExperience">
-            <div>
-              {["9", "8", "6", "4", "0"].map((exp) => (
-                <div key={exp}>
-                  <input
-                    type="checkbox"
-                    name="experience"
-                    value={exp}
-                    onClick={handleFilterClick}
-                  />{" "}
-                  {exp === "0"
-                    ? "Less than 1 year"
-                    : exp === "9"
-                    ? "Above 8 years"
-                    : exp === "4"
-                    ? exp - 2 + " - " + exp + " years"
-                    : exp - 1 + " - " + exp + " years"}
-                </div>
-              ))}
+            <div className="collapse" id="collapseExampleExperience">
+              <div>
+                {["9", "8", "6", "4", "0"].map((exp) => (
+                  <div key={exp}>
+                    <input
+                      type="checkbox"
+                      name="experience"
+                      value={exp}
+                      onClick={handleFilterClick}
+                    />{" "}
+                    {exp === "0"
+                      ? "Less than 1 year"
+                      : exp === "9"
+                      ? "Above 8 years"
+                      : exp === "4"
+                      ? exp - 2 + " - " + exp + " years"
+                      : exp - 1 + " - " + exp + " years"}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Age */}
-        <div className="mb-2">
-          <button
-            className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExampleAge"
-            aria-expanded="false"
-            aria-controls="collapseExampleAge"
-            onClick={() => handleId(3)}
-          >
-            <span>Age</span>
-            {show && activeId === 3 ? (
-              <FaChevronUp size={15} />
-            ) : (
-              <FaChevronDown size={15} />
-            )}
-          </button>
+          {/* Age */}
+          <div className="">
+            <button
+              className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExampleAge"
+              aria-expanded="false"
+              aria-controls="collapseExampleAge"
+              onClick={() => handleId(3)}
+            >
+              <span>Age</span>
+              {show && activeId === 3 ? (
+                <FaChevronUp size={15} />
+              ) : (
+                <FaChevronDown size={15} />
+              )}
+            </button>
 
-          <div className="collapse" id="collapseExampleAge">
-            <div>
-              {["25", "30"].map((age) => (
-                <div key={age}>
-                  <input
-                    type="checkbox"
-                    name="age"
-                    value={age}
-                    onClick={handleFilterClick}
-                  />{" "}
-                  {age === "25" ? "20 - 25 Year" : "26 - 30 Year"}
-                </div>
-              ))}
+            <div className="collapse" id="collapseExampleAge">
+              <div>
+                {["25", "30"].map((age) => (
+                  <div key={age}>
+                    <input
+                      type="checkbox"
+                      name="age"
+                      value={age}
+                      onClick={handleFilterClick}
+                    />{" "}
+                    {age === "25" ? "20 - 25 Year" : "26 - 30 Year"}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* GPA */}
-        <div className="mb-2">
-          <button
-            className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExampleGPA"
-            aria-expanded="false"
-            aria-controls="collapseExampleGPA"
-            onClick={() => handleId(4)}
-          >
-            <span>GPA</span>
-            {show && activeId === 4 ? (
-              <FaChevronUp size={15} />
-            ) : (
-              <FaChevronDown size={15} />
-            )}
-          </button>
+          {/* Skill */}
+          <div className="">
+            <button
+              className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExampleSkill"
+              onClick={() => handleId(4)}
+            >
+              <span>Skill</span>
+              {show && activeId === 4 ? (
+                <FaChevronUp size={15} />
+              ) : (
+                <FaChevronDown size={15} />
+              )}
+            </button>
+            <div className="collapse" id="collapseExampleSkill">
+              {skillData &&
+                skillData.map((skill) => (
+                  <div key={skill.id}>
+                    <input
+                      type="checkbox"
+                      name="skill"
+                      value={skill.name}
+                      onClick={handleFilterClick}
+                    />{" "}
+                    {skill.name}
+                  </div>
+                ))}
+            </div>
+          </div>
 
-          <div className="collapse" id="collapseExampleGPA">
-            <div>
-              {["3.0", "3.5", "3.75", "4.0"].map((gpa) => (
-                <div key={gpa}>
-                  <input
-                    type="checkbox"
-                    name="gpa"
-                    value={gpa}
-                    onClick={handleFilterClick}
-                  />{" "}
-                  {gpa === "3.0"
-                    ? "> 2.75 - <= 3.0"
-                    : gpa === "3.5"
-                    ? "> 3.0 - <= 3.5"
-                    : gpa === "3.75"
-                    ? "> 3.5 - <= 3.75"
-                    : "> 3.75 - <= 4.0"}
-                  {/* {gpa === "3.0" ? "More than 2.75 up to 3.0" : 
+          {/* GPA */}
+          <div className="">
+            <button
+              className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExampleGPA"
+              aria-expanded="false"
+              aria-controls="collapseExampleGPA"
+              onClick={() => handleId(4)}
+            >
+              <span>GPA</span>
+              {show && activeId === 4 ? (
+                <FaChevronUp size={15} />
+              ) : (
+                <FaChevronDown size={15} />
+              )}
+            </button>
+
+            <div className="collapse" id="collapseExampleGPA">
+              <div>
+                {["3.0", "3.5", "3.75", "4.0"].map((gpa) => (
+                  <div key={gpa}>
+                    <input
+                      type="checkbox"
+                      name="gpa"
+                      value={gpa}
+                      onClick={handleFilterClick}
+                    />{" "}
+                    {gpa === "3.0"
+                      ? "> 2.75 - <= 3.0"
+                      : gpa === "3.5"
+                      ? "> 3.0 - <= 3.5"
+                      : gpa === "3.75"
+                      ? "> 3.5 - <= 3.75"
+                      : "> 3.75 - <= 4.0"}
+                    {/* {gpa === "3.0" ? "More than 2.75 up to 3.0" : 
  gpa === "3.5" ? "More than 3.0 up to 3.5" : 
  gpa === "3.75" ? "More than 3.5 up to 3.75" : 
  "More than 3.75 up to 4.0"} */}
-                </div>
-              ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Skill */}
-        <div className="mb-2">
-          <button
-            className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExampleSkill"
-            onClick={() => handleId(5)}
-          >
-            <span>Skill</span>
-            {show && activeId === 5 ? (
-              <FaChevronUp size={15} />
-            ) : (
-              <FaChevronDown size={15} />
-            )}
-          </button>
-          <div className="collapse" id="collapseExampleSkill">
-            {skillData &&
-              skillData.map((skill) => (
-                <div key={skill.id}>
-                  <input
-                    type="checkbox"
-                    name="skill"
-                    value={skill.name}
-                    onClick={handleFilterClick}
-                  />{" "}
-                  {skill.name}
-                </div>
-              ))}
+          {/* Major */}
+          <div className="">
+            <button
+              className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExampleMajor"
+              onClick={() => handleId(5)}
+            >
+              <span>Major</span>
+              {show && activeId === 5 ? (
+                <FaChevronUp size={15} />
+              ) : (
+                <FaChevronDown size={15} />
+              )}
+            </button>
+            <div className="collapse" id="collapseExampleMajor">
+              {majorData &&
+                majorData.map((major) => (
+                  <div key={major.id}>
+                    <input
+                      type="checkbox"
+                      name="major"
+                      value={major.name}
+                      onClick={handleFilterClick}
+                    />{" "}
+                    {major.name}
+                  </div>
+                ))}
+            </div>
           </div>
-        </div>
 
-        {/* University */}
-        <div className="mb-2">
-          <button
-            className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExampleUniversity"
-            onClick={() => handleId(6)}
-          >
-            <span>University</span>
-            {show && activeId === 6 ? (
-              <FaChevronUp size={15} />
-            ) : (
-              <FaChevronDown size={15} />
-            )}
-          </button>
-          <div className="collapse" id="collapseExampleUniversity">
-            {universityData &&
-              universityData.map((university) => (
-                <div key={university.id}>
-                  <input
-                    type="checkbox"
-                    name="university"
-                    value={university.name}
-                    onClick={handleFilterClick}
-                  />{" "}
-                  {university.name}
-                </div>
-              ))}
-          </div>
-        </div>
-
-        {/* Major */}
-        <div className="mb-2">
-          <button
-            className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExampleMajor"
-            onClick={() => handleId(7)}
-          >
-            <span>Major</span>
-            {show && activeId === 7 ? (
-              <FaChevronUp size={15} />
-            ) : (
-              <FaChevronDown size={15} />
-            )}
-          </button>
-          <div className="collapse" id="collapseExampleMajor">
-            {majorData &&
-              majorData.map((major) => (
-                <div key={major.id}>
-                  <input
-                    type="checkbox"
-                    name="major"
-                    value={major.name}
-                    onClick={handleFilterClick}
-                  />{" "}
-                  {major.name}
-                </div>
-              ))}
+          {/* University */}
+          <div className="">
+            <button
+              className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExampleUniversity"
+              onClick={() => handleId(6)}
+            >
+              <span>University</span>
+              {show && activeId === 6 ? (
+                <FaChevronUp size={15} />
+              ) : (
+                <FaChevronDown size={15} />
+              )}
+            </button>
+            <div className="collapse" id="collapseExampleUniversity">
+              {universityData &&
+                universityData.map((university) => (
+                  <div key={university.id}>
+                    <input
+                      type="checkbox"
+                      name="university"
+                      value={university.name}
+                      onClick={handleFilterClick}
+                    />{" "}
+                    {university.name}
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="datatable-container flex-grow-1">
+      <div className="datatable-container">
         <table className="display table table-striped table-bordered" />
       </div>
     </div>
