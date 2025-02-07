@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "datatables.net-react";
 import DT from "datatables.net-dt";
-import { getSkillData, getMajorData } from "../../service/CVBank";
+import {
+  getSkillData,
+  getMajorData,
+  getUniversityData,
+} from "../../service/CVBank";
 import $ from "jquery";
 import "./index.css";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
@@ -13,8 +17,10 @@ const Dashboard = () => {
     gender: [],
     experience: [],
     skill: [],
+    university: [],
     major: [],
     age: [],
+    gpa: [],
   });
 
   const [show, setShow] = useState(false);
@@ -22,13 +28,16 @@ const Dashboard = () => {
   const [showScroll, setShowScroll] = useState(false);
   const [skillData, setSkillData] = useState([]);
   const [majorData, setMajorData] = useState([]);
+  const [universityData, setUniversityData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const skills = await getSkillData();
       const majors = await getMajorData();
+      const university = await getUniversityData();
       setSkillData(skills);
       setMajorData(majors);
+      setUniversityData(university);
     };
     fetchData();
   }, []);
@@ -40,7 +49,12 @@ const Dashboard = () => {
       let updatedValues = prevFilters[name];
 
       if (checked) {
-        if (name === "gender" || name === "experience" || name === "age") {
+        if (
+          name === "gender" ||
+          name === "experience" ||
+          name === "age" ||
+          name === "gpa"
+        ) {
           updatedValues = value;
         } else {
           updatedValues = [...prevFilters[name], value];
@@ -48,7 +62,7 @@ const Dashboard = () => {
       } else {
         if (name === "gender") {
           updatedValues = "";
-        } else if (name === "experience" || name === "age") {
+        } else if (name === "experience" || name === "age" || name === "gpa") {
           updatedValues = 0;
         } else {
           updatedValues = prevFilters[name].filter((item) => item !== value);
@@ -77,6 +91,8 @@ const Dashboard = () => {
           d.experience = filters.experience || "";
           d.skill = filters.skill.join(",") || "";
           d.major = filters.major.join(",") || "";
+          d.university = filters.university.join(",") || "";
+          d.gpa = filters.gpa || "";
           d.age = filters.age || "";
         },
         dataSrc: "data",
@@ -167,7 +183,6 @@ const Dashboard = () => {
                 <FaChevronDown size={15} />
               )}
             </button>
-
             <div className="collapse" id="collapseExampleGender">
               <div>
                 {["Male", "Female"].map((gender) => (
@@ -294,6 +309,52 @@ const Dashboard = () => {
             </div>
           </div>
 
+          {/* GPA */}
+          <div className="">
+            <button
+              className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExampleGPA"
+              aria-expanded="false"
+              aria-controls="collapseExampleGPA"
+              onClick={() => handleId(4)}
+            >
+              <span>GPA</span>
+              {show && activeId === 4 ? (
+                <FaChevronUp size={15} />
+              ) : (
+                <FaChevronDown size={15} />
+              )}
+            </button>
+
+            <div className="collapse" id="collapseExampleGPA">
+              <div>
+                {["3.0", "3.5", "3.75", "4.0"].map((gpa) => (
+                  <div key={gpa}>
+                    <input
+                      type="checkbox"
+                      name="gpa"
+                      value={gpa}
+                      onClick={handleFilterClick}
+                    />{" "}
+                    {gpa === "3.0"
+                      ? "> 2.75 - <= 3.0"
+                      : gpa === "3.5"
+                      ? "> 3.0 - <= 3.5"
+                      : gpa === "3.75"
+                      ? "> 3.5 - <= 3.75"
+                      : "> 3.75 - <= 4.0"}
+                    {/* {gpa === "3.0" ? "More than 2.75 up to 3.0" : 
+ gpa === "3.5" ? "More than 3.0 up to 3.5" : 
+ gpa === "3.75" ? "More than 3.5 up to 3.75" : 
+ "More than 3.75 up to 4.0"} */}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Major */}
           <div className="">
             <button
@@ -320,6 +381,37 @@ const Dashboard = () => {
                       onClick={handleFilterClick}
                     />{" "}
                     {major.name}
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          {/* University */}
+          <div className="">
+            <button
+              className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExampleUniversity"
+              onClick={() => handleId(6)}
+            >
+              <span>University</span>
+              {show && activeId === 6 ? (
+                <FaChevronUp size={15} />
+              ) : (
+                <FaChevronDown size={15} />
+              )}
+            </button>
+            <div className="collapse" id="collapseExampleUniversity">
+              {universityData &&
+                universityData.map((university) => (
+                  <div key={university.id}>
+                    <input
+                      type="checkbox"
+                      name="university"
+                      value={university.name}
+                      onClick={handleFilterClick}
+                    />{" "}
+                    {university.name}
                   </div>
                 ))}
             </div>
