@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import { CiCirclePlus } from "react-icons/ci";
 import { FaChevronDown, FaChevronUp, FaRegTrashAlt } from "react-icons/fa";
@@ -7,8 +7,7 @@ import "react-quill-new/dist/quill.snow.css";
 import Swal from "sweetalert2";
 import "./index.css";
 
-const WorkExpUser = ({ workExpData }) => {
-  let [workExp, setWorkExp] = useState(workExpData);
+const WorkExpUser = ({ workExp, setWorkExp }) => {
   const [show, setShow] = useState(false);
 
   const [activeId, setActiveId] = useState(null);
@@ -20,12 +19,6 @@ const WorkExpUser = ({ workExpData }) => {
   const handleShow = () => {
     setShow(!show);
   };
-
-  useEffect(() => {
-    if (workExpData) {
-      setWorkExp(workExpData);
-    }
-  }, [workExpData]);
 
   let handleInputChange = (id, field, value) => {
     setWorkExp((prevWorkExp) =>
@@ -44,7 +37,9 @@ const WorkExpUser = ({ workExpData }) => {
       end_date: "",
       description: "",
     };
-    setWorkExp((prevWorkExp) => [...prevWorkExp, newItem]);
+    setWorkExp((prevWorkExp) => {
+      return Array.isArray(prevWorkExp) ? [...prevWorkExp, newItem] : [newItem];
+    });
   };
 
   let handleDeleteWorkExperience = (id) => {

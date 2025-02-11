@@ -20,9 +20,9 @@ const ProfileUser = ({
   setGender,
   setBirthDate,
   setPhotoProfile,
+  setFile,
 }) => {
   let [previewImage, setPreviewImage] = useState("");
-
   const [show, setShow] = useState(false);
 
   const handleShow = () => {
@@ -34,18 +34,18 @@ const ProfileUser = ({
     if (file) {
       setPreviewImage(URL.createObjectURL(file));
       setPhotoProfile(file);
+      setFile(file);
     }
   };
 
-  const handleGenderChange = (event) => {
-    setGender(event.target.value); 
-  };
-
   useEffect(() => {
-    console.log(photoProfile);
-    setPreviewImage(photoProfile);
-    console.log(previewImage);
-  })
+    if (photoProfile instanceof Blob) {
+      const imageUrl = URL.createObjectURL(photoProfile);
+      setPreviewImage(imageUrl);
+    } else {
+      setPreviewImage(photoProfile);
+    }
+  }, [photoProfile]);
 
   return (
     <>
@@ -138,6 +138,7 @@ const ProfileUser = ({
                           className="form-control"
                           id="inputDate"
                           value={birthDate}
+                          onChange={(e) => setBirthDate(e.target.value)}
                         />
                       </div>
                       <div className="col-12 col-md-6 mb-3">
@@ -148,7 +149,7 @@ const ProfileUser = ({
                           className="form-control"
                           id="inputGender"
                           value={gender}
-                          onChange={handleGenderChange}
+                          onChange={(e) => setGender(e.target.value)}
                         >
                           <option value="">Select Gender</option>
                           <option value="M">Male</option>
@@ -165,6 +166,7 @@ const ProfileUser = ({
                         theme="snow"
                         id="inputDescription"
                         value={summary}
+                        onChange={(content) => setSummary(content)}
                       />
                     </div>
                   </div>

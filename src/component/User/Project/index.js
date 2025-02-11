@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import { CiCirclePlus } from "react-icons/ci";
 import { FaChevronDown, FaChevronUp, FaTrashAlt } from "react-icons/fa";
@@ -6,8 +6,7 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import Swal from "sweetalert2";
 
-const ProjectUser = ({ projectsData }) => {
-  const [project, setProject] = useState(projectsData);
+const ProjectUser = ({ project, setProject }) => {
   const [show, setShow] = useState(false);
   const [activeId, setActiveId] = useState(null);
 
@@ -18,12 +17,7 @@ const ProjectUser = ({ projectsData }) => {
   const handleShowId = (id) => {
     setActiveId((prevId) => (prevId === id ? null : id));
   };
-  useEffect(() => {
-    if (projectsData) {
-      setProject(projectsData);
-    }
-  }, [projectsData]);
-
+  
   const handleInputChange = (id, field, value) => {
     setProject((prevProject) =>
       prevProject.map((prj) =>

@@ -307,10 +307,6 @@ const Dashboard = () => {
                     : gpa === "3.75"
                     ? "> 3.5 - <= 3.75"
                     : "> 3.75 - <= 4.0"}
-                  {/* {gpa === "3.0" ? "More than 2.75 up to 3.0" : 
- gpa === "3.5" ? "More than 3.0 up to 3.5" : 
- gpa === "3.75" ? "More than 3.5 up to 3.75" : 
- "More than 3.75 up to 4.0"} */}
                 </div>
               ))}
             </div>
