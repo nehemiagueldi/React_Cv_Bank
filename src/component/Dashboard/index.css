@@ -1,7 +1,7 @@
 .btn-custom1 {
   color: black;
-  border: none;
-  width: 250px;
+  border: none  ;
+  width: 20vw;
   font-size: large;
   background-color: none;
   transition: transform 0.3s ease, background-color 0.3s ease,
@@ -26,4 +26,3 @@
 
 .datatable-container {
   width: 80%;
-}

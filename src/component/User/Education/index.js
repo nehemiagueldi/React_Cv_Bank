@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import { CiCirclePlus } from "react-icons/ci";
 import { FaChevronDown, FaChevronUp, FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const EducationUser = ({
+  setSelectedFaculty,
   degreeList,
   facultyList,
   majorList,
-  educationData,
+  universityList,
+  education,
+  setEducation,
 }) => {
-  const [education, setEducation] = useState(educationData);
   const [show, setShow] = useState(false);
   const [activeId, setActiveId] = useState(null);
 
@@ -21,12 +23,6 @@ const EducationUser = ({
   const handleShowId = (id) => {
     setActiveId((prevId) => (prevId === id ? null : id));
   };
-
-  useEffect(() => {
-    if (educationData) {
-      setEducation(educationData);
-    }
-  }, [educationData]);
 
   const handleInputChange = (id, field, value) => {
     setEducation((prevEducation) =>
@@ -151,9 +147,21 @@ const EducationUser = ({
                               </label>
                               <select
                                 className="form-select"
-                                defaultValue={edc.degree.name}
+                                value={edc.degree.id || ""}
                                 id={`inputDegreeName4${edc.id}`}
                                 aria-label="Select Degree"
+                                onChange={(e) => {
+                                  const selectedDegree =
+                                    degreeList.find(
+                                      (dgr) =>
+                                        dgr.id === parseInt(e.target.value, 10)
+                                    );
+                                  handleInputChange(
+                                    edc.id,
+                                    "degree",
+                                    selectedDegree || { id: null, name: "" }
+                                  );
+                                }}
                               >
                                 <option disabled>Choose...</option>
                                 {degreeList &&
@@ -173,19 +181,33 @@ const EducationUser = ({
                               >
                                 University
                               </label>
-                              <input
-                                type="text"
+                              <select
                                 className="form-control"
+                                value={edc.university.id || ""}
                                 id={`inputUniversityName4${edc.id}`}
-                                value={edc.university.name}
-                                onChange={(e) =>
+                                onChange={(e) => {
+                                  const selectedUniversity =
+                                    universityList.find(
+                                      (unv) =>
+                                        unv.id === parseInt(e.target.value, 10)
+                                    );
                                   handleInputChange(
                                     edc.id,
-                                    "university.name",
-                                    e.target.value
-                                  )
-                                }
-                              />
+                                    "university",
+                                    selectedUniversity || { id: null, name: "" }
+                                  );
+                                }}
+                              >
+                                <option disabled value="">
+                                  Choose...
+                                </option>
+                                {universityList &&
+                                  universityList.map((unv) => (
+                                    <option key={unv.id} value={unv.id}>
+                                      {unv.name}
+                                    </option>
+                                  ))}
+                              </select>
                             </div>
                             <div className="col-md-2">
                               <label
@@ -217,16 +239,29 @@ const EducationUser = ({
                               </label>
                               <select
                                 className="form-select"
+                                value={edc.major.faculty.id || ""}
                                 id={`inputFaculty4${edc.id}`}
-                                aria-label="Select Degree"
+                                aria-label="Select Faculty"
+                                onChange={(e) => {
+                                  const selectedFaculty = facultyList.find(
+                                    (fct) =>
+                                      fct.id === parseInt(e.target.value, 10)
+                                  );
+                                  handleInputChange(
+                                    edc.id,
+                                    "faculty",
+                                    selectedFaculty || { id: null, name: "" },
+                                    setSelectedFaculty(selectedFaculty.id)
+                                  );
+                                }}
                               >
-                                <option disabled>Choose...</option>
+                                <option disabled value="">
+                                  Choose...
+                                </option>
                                 {facultyList &&
                                   facultyList.map((fct) => (
                                     <option key={fct.id} value={fct.id}>
-                                      {fct.name === edc.major.faculty.name
-                                        ? edc.major.faculty.name
-                                        : fct.name}
+                                      {fct.name}
                                     </option>
                                   ))}
                               </select>
@@ -240,16 +275,28 @@ const EducationUser = ({
                               </label>
                               <select
                                 className="form-select"
+                                value={edc.major.id || ""}
                                 id={`inputMajor4${edc.id}`}
-                                aria-label="Select Degree"
+                                aria-label="Select Major"
+                                onChange={(e) => {
+                                  const selectedMajor = majorList.find(
+                                    (mjr) =>
+                                      mjr.id === parseInt(e.target.value, 10)
+                                  );
+                                  handleInputChange(
+                                    edc.id,
+                                    "major",
+                                    selectedMajor || { id: null, name: "" }
+                                  );
+                                }}
                               >
-                                <option disabled>Choose...</option>
+                                <option disabled value="">
+                                  Choose...
+                                </option>
                                 {majorList &&
                                   majorList.map((mjr) => (
                                     <option key={mjr.id} value={mjr.id}>
-                                      {mjr.name === edc.major.name
-                                        ? edc.major.name
-                                        : mjr.name}
+                                      {mjr.name}
                                     </option>
                                   ))}
                               </select>

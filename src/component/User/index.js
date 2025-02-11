@@ -22,7 +22,7 @@ const User = () => {
   let [position, setPosition] = useState(null);
   let [summary, setSummary] = useState(null);
   let [gender, setGender] = useState(null);
-  let [birthDate, setBirthDate] = useState(null);
+  let [birthdate, setBirthdate] = useState(null);
   let [photoProfile, setPhotoProfile] = useState(null);
   let [skillsList, setSkillsList] = useState(null);
   let [skillsDefault, setSkillsDefault] = useState(null);
@@ -40,6 +40,7 @@ const User = () => {
   let [educations, setEducations] = useState(null);
   let { randomString } = useParams();
   let [selectedFaculty, setSelectedFaculty] = useState("");
+  let [file, setFile] = useState(null)
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -56,7 +57,7 @@ const User = () => {
         setPosition(result.cvPerson.position);
         setSummary(result.cvPerson.summary);
         setGender(result.cvPerson.person.gender);
-        setBirthDate(result.cvPerson.person.birthdate);
+        setBirthdate(result.cvPerson.person.birthdate);
         setPhotoProfile(result.cvPerson.photo_profile);
         let formattedSkills = skillList.map((skill) => ({
           // List Skills
@@ -64,7 +65,7 @@ const User = () => {
           label: skill.name,
         }));
         console.log("name : " + name)
-        console.log("birthdate : " + birthDate)
+        console.log("birthdate : " + birthdate)
         setSkillsList(formattedSkills);
         let defaultSkills = result.cvSkills.map((cvSkill) => ({
           // Default Skill's User
@@ -128,12 +129,38 @@ const User = () => {
 
   let handleSubmit = async (e) => {
     e.preventDefault();
+    let uploadedUrl = photoProfile;
+    if  (file !== null) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "default_preset");
+  
+  
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/djrz8tdii/image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+  
+        const dataUrl = await response.json();
+        if (response.ok) {
+          uploadedUrl = dataUrl.secure_url;  
+          console.log("Upload successful:", uploadedUrl);
+          } else {
+            console.error("Upload failed:", dataUrl.error.message);
+          }
+    }
+
+    
     let data = {
       name,
+      gender,
+      birthdate,
+      photoProfile : uploadedUrl,
       position,
       summary,
-      gender,
-      birthDate,
       skillsSelected,
       toolsSelected,
       workExp,
@@ -163,10 +190,11 @@ const User = () => {
             setSummary={setSummary}
             photoProfile={photoProfile}
             setPhotoProfile={setPhotoProfile}
-            birthDate={birthDate}
-            setBirthDate={setBirthDate}
+            birthDate={birthdate}
+            setBirthDate={setBirthdate}
             gender={gender}
             setGender={setGender}
+            setFile={setFile}
           />
           <SkillsUser
             skillsList={skillsList}
