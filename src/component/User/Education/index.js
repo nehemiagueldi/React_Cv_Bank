@@ -32,6 +32,30 @@ const EducationUser = ({
     );
   };
 
+  const handleFacultyChange = (id, facultyId) => {
+    const selectedFaculty = facultyList.find(
+      (fct) => fct.id === parseInt(facultyId, 10)
+    );
+
+    setEducation((prevEducation) =>
+      prevEducation.map((edc) =>
+        edc.id === id
+          ? {
+              ...edc,
+              major: {
+                ...edc.major,
+                id: null,
+                name: "",
+                faculty: selectedFaculty || { id: null, name: "" },
+              },
+            }
+          : edc
+      )
+    );
+
+    setSelectedFaculty(selectedFaculty ? selectedFaculty.id : null);
+  };
+
   let handleAddEducation = () => {
     let newItem = {
       id: new Date().getTime(),
@@ -151,11 +175,10 @@ const EducationUser = ({
                                 id={`inputDegreeName4${edc.id}`}
                                 aria-label="Select Degree"
                                 onChange={(e) => {
-                                  const selectedDegree =
-                                    degreeList.find(
-                                      (dgr) =>
-                                        dgr.id === parseInt(e.target.value, 10)
-                                    );
+                                  const selectedDegree = degreeList.find(
+                                    (dgr) =>
+                                      dgr.id === parseInt(e.target.value, 10)
+                                  );
                                   handleInputChange(
                                     edc.id,
                                     "degree",
@@ -242,18 +265,9 @@ const EducationUser = ({
                                 value={edc.major.faculty.id || ""}
                                 id={`inputFaculty4${edc.id}`}
                                 aria-label="Select Faculty"
-                                onChange={(e) => {
-                                  const selectedFaculty = facultyList.find(
-                                    (fct) =>
-                                      fct.id === parseInt(e.target.value, 10)
-                                  );
-                                  handleInputChange(
-                                    edc.id,
-                                    "faculty",
-                                    selectedFaculty || { id: null, name: "" },
-                                    setSelectedFaculty(selectedFaculty.id)
-                                  );
-                                }}
+                                onChange={(e) =>
+                                  handleFacultyChange(edc.id, e.target.value)
+                                }
                               >
                                 <option disabled value="">
                                   Choose...
@@ -289,6 +303,7 @@ const EducationUser = ({
                                     selectedMajor || { id: null, name: "" }
                                   );
                                 }}
+                                disabled={!edc.major.faculty.id}
                               >
                                 <option disabled value="">
                                   Choose...

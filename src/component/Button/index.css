@@ -1,0 +1,21 @@
+.btn-custom1 {
+  color: black;
+  border: none;
+  width: 20vw;
+  font-size: large;
+  background-color: none;
+  transition: transform 0.3s ease, background-color 0.3s ease,
+    box-shadow 0.3s ease;
+  margin-right: 30px;
+}
+
+.input-skill {
+  width: 20vw;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
