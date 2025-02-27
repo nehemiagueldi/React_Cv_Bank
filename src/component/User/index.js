@@ -47,18 +47,19 @@ const User = () => {
     let getCVPerson = async () => {
       try {
         let result = await getCVPersonData(randomString);
+        result = result.cvPerson;
         console.log(result);
         let skillList = await getSkillData();
         let toolList = await getToolData();
         let degreeList = await getDegreeData();
         let facultyList = await getFacultyData();
         let universityList = await getUniversityData();
-        setName(result.cvPerson.person.name);
-        setPosition(result.cvPerson.position);
-        setSummary(result.cvPerson.summary);
-        setGender(result.cvPerson.person.gender);
-        setBirthdate(result.cvPerson.person.birthdate);
-        setPhotoProfile(result.cvPerson.photo_profile);
+        setName(result.person.name);
+        setPosition(result.position);
+        setSummary(result.summary);
+        setGender(result.person.gender);
+        setBirthdate(result.person.birthdate);
+        setPhotoProfile(result.photo_profile);
         let formattedSkills = skillList.map((skill) => ({
           // List Skills
           value: skill.id,

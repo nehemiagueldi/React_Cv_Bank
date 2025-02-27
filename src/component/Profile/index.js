@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { calculateAge } from "../../service/CVBank";
+import { createMarkup, calculateAge } from "../../service/CVBank";
 
 const Profile = ({ profileData }) => {
   let [namePerson, setNamePerson] = useState(null);
@@ -58,7 +58,7 @@ const Profile = ({ profileData }) => {
             />
           </div>
           <h4>Summary</h4>
-          <p style={{ textAlign: "justify" }}>{summaryPerson}</p>
+          <p style={{ textAlign: "justify" }} dangerouslySetInnerHTML={createMarkup(summaryPerson)}></p>
         </div>
       </div>
     </>
