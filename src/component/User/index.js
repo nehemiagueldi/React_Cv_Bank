@@ -16,6 +16,7 @@ import WorkExpUser from "./WorkExp";
 import ProjectUser from "./Project";
 import TrainingUser from "./Training";
 import EducationUser from "./Education";
+import Swal from "sweetalert2";
 
 const User = () => {
   let [name, setName] = useState(null);
@@ -40,7 +41,7 @@ const User = () => {
   let [educations, setEducations] = useState(null);
   let { randomString } = useParams();
   let [selectedFaculty, setSelectedFaculty] = useState("");
-  let [file, setFile] = useState(null)
+  let [file, setFile] = useState(null);
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -65,8 +66,8 @@ const User = () => {
           value: skill.id,
           label: skill.name,
         }));
-        console.log("name : " + name)
-        console.log("birthdate : " + birthdate)
+        console.log("name : " + name);
+        console.log("birthdate : " + birthdate);
         setSkillsList(formattedSkills);
         let defaultSkills = result.cvSkills.map((cvSkill) => ({
           // Default Skill's User
@@ -130,52 +131,87 @@ const User = () => {
 
   let handleSubmit = async (e) => {
     e.preventDefault();
-    let uploadedUrl = photoProfile;
-    if  (file !== null) {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "default_preset");
-  
-  
-        const response = await fetch(
-          "https://api.cloudinary.com/v1_1/djrz8tdii/image/upload",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-  
-        const dataUrl = await response.json();
-        if (response.ok) {
-          uploadedUrl = dataUrl.secure_url;  
-          console.log("Upload successful:", uploadedUrl);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, update it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let uploadedUrl = photoProfile;
+        if (file !== null) {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("upload_preset", "default_preset");
+
+          const response = await fetch(
+            "https://api.cloudinary.com/v1_1/djrz8tdii/image/upload",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+
+          const dataUrl = await response.json();
+          if (response.ok) {
+            uploadedUrl = dataUrl.secure_url;
+            console.log("Upload successful:", uploadedUrl);
           } else {
             console.error("Upload failed:", dataUrl.error.message);
           }
-    }
+        }
 
-    
-    let data = {
-      name,
-      gender,
-      birthdate,
-      photoProfile : uploadedUrl,
-      position,
-      summary,
-      skillsSelected,
-      toolsSelected,
-      workExp,
-      projects,
-      trainings,
-      educations,
-    };
-    console.log("Data Sent:", JSON.stringify(data, null, 2));
-    try {
-      await postCVPersonData(randomString, data);
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
+        let data = {
+          name,
+          gender,
+          birthdate,
+          photoProfile: uploadedUrl,
+          position,
+          summary,
+          skillsSelected,
+          toolsSelected,
+          workExp,
+          projects,
+          trainings,
+          educations,
+        };
+        console.log("Data Sent:", JSON.stringify(data, null, 2));
+        try {
+          await postCVPersonData(randomString, data);
+          navigate("/");
+        } catch (error) {
+          console.log(error);
+        }
+
+        Swal.fire({
+          title: "Updated!",
+          text: "Your data has been updated.",
+          icon: "success",
+          timer: 1500,
+        });
+      }
+    });
+  };
+
+  let handleCancel = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, cancel it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/";
+      }
+    });
   };
 
   return (
@@ -224,8 +260,7 @@ const User = () => {
             <button
               type="button"
               onClick={(e) => {
-                e.preventDefault();
-                window.location.href = "/";
+                handleCancel(e);
               }}
               className="btn btn-danger"
             >

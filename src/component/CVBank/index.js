@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../Footer";
-import Project from "../Project";
-import Training from "../Training";
-import Skills from "../Skills";
-import Profile from "../Profile";
-import Education from "../Education";
-import WorkExp from "../WorkExp";
+import Profile from "./Profile";
+import Skills from "./Skills";
+import WorkExp from "./WorkExp";
+import Project from "./Project";
+import Training from "./Training";
+import Education from "./Education";
 import { getCVPersonData } from "../../service/CVBank";
 import { useParams } from "react-router";
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createMarkup, calculateAge } from "../../service/CVBank";
+import { calculateAge, createMarkup } from "../../../service/CVBank";
 
 const Profile = ({ profileData }) => {
   let [namePerson, setNamePerson] = useState(null);

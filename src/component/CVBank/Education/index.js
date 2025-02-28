@@ -34,7 +34,7 @@ const Education = ({ educationData }) => {
               </div>
 
               <div>
-                <p>GPA : {education.gpa ? education.gpa.toFixed(2) : ""} / 4.00</p>
+                <p>GPA : {education.gpa.toFixed(2)} / 4.00</p>
               </div>
             </div>
           ))}

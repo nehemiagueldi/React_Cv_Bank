@@ -24,6 +24,7 @@ const Project = ({ projectData }) => {
               <div key={project.id}>
                 <div className="d-flex">
                   <h4 className="fw-bold">{project.company}&nbsp;-&nbsp;</h4>
+                  <h4 className="fw-bold">{project.name}</h4>
                 </div>
                 <div className="d-flex">
                   <h6 className="fw-bold">{formatDate(project.start_date)}&nbsp;-&nbsp;</h6>
