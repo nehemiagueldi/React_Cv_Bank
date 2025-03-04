@@ -186,7 +186,7 @@ const EducationUser = ({
                                   );
                                 }}
                               >
-                                <option disabled>Choose...</option>
+                                <option disabled value="">Choose...</option>
                                 {degreeList &&
                                   degreeList.map((dgr) => (
                                     <option key={dgr.id} value={dgr.id}>
@@ -197,6 +197,7 @@ const EducationUser = ({
                                   ))}
                               </select>
                             </div>
+                            
                             <div className="col-md-4">
                               <label
                                 htmlFor={`inputUniversityName4${edc.id}`}
