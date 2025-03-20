@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./index.css";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import ButtonToggle from "./atoms/buttontoggle";
 
 const FilterInput = ({ dataFilter, id, name, setFilters }) => {
-  const [show, setShow] = useState(false);
-  const [activeId, setActiveId] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   const [inputValue, setInputValue] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
@@ -37,31 +37,31 @@ const FilterInput = ({ dataFilter, id, name, setFilters }) => {
     setShowSuggestions(false);
   };
 
-  const handleRemoveItem = (itemName) => {
+  const handleRemoveMultipleItem = (itemName) => {
     const updatedItems = selectedItems.filter((item) => item !== itemName);
     setSelectedItems(updatedItems);
     setFilters((prev) => ({ ...prev, [name]: updatedItems }));
   };
-  const handleId = (id) => {
-    setShow(!show);
-    setActiveId(id);
+ 
+  const handleRemoveItem = () => {
+    setSelectedItems([]); 
+    setInputValue(""); 
+    setFilters((prev) => ({ ...prev, [name]: []}));
+  };
+  const toggleDropdown = (id) => {
+    setIsExpanded(!isExpanded);
+    setSelectedId(id);
   };
 
   return (
     <div className="">
-      <button
-        className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
-        data-bs-toggle="collapse"
-        data-bs-target={`#collapseExample${name}`}
-        onClick={() => handleId(id)}
-      >
-        <span>{name}</span>
-        {show && activeId === id ? (
-          <FaChevronUp size={15} />
-        ) : (
-          <FaChevronDown size={15} />
-        )}
-      </button>
+      <ButtonToggle
+        id={id}
+        isExpanded={isExpanded}
+        name={name}
+        selectedId={selectedId}
+        toggleDropdown={toggleDropdown}
+      />
       <div className="collapse" id={`collapseExample${name}`}>
         <div className="relative">
           <div className="input-container" style={{ position: "relative" }}>
@@ -75,17 +75,8 @@ const FilterInput = ({ dataFilter, id, name, setFilters }) => {
             />
             {name !== "Skill" && selectedItems.length > 0 && (
               <button
-                className="input-button"
-                onClick={() => {setSelectedItems([]); setInputValue(""); setFilters((prev) => ({ ...prev, [name]: []}));}}
-                style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  backgroundColor: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                }}
+                className="remove-button"
+                onClick={handleRemoveItem}
               >
                 X
               </button>
@@ -94,11 +85,11 @@ const FilterInput = ({ dataFilter, id, name, setFilters }) => {
           </div>
 
           {showSuggestions && filteredItems.length > 0 && (
-            <ul className="absolute bg-white border mt-1 w-full shadow-md">
+            <ul className="absolute suggestion-list-box">
               {filteredItems.map((item) => (
                 <li
                   key={item.id}
-                  className="p-2 hover:bg-gray-200 cursor-pointer"
+                  className="suggestion-list"
                   onClick={() => handleSelectItem(item.name)}
                 >
                   {item.name}
@@ -107,16 +98,16 @@ const FilterInput = ({ dataFilter, id, name, setFilters }) => {
             </ul>
           )}
           {name === "Skill" && (
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div>
               {selectedItems.map((item, index) => (
                 <div
                   key={index}
-                  className="bg-gray-200 text-black px-3 py-1 rounded-full inline-flex items-center justify-between border border-gray-300 shadow-sm w-auto max-w-max"
+                  className="relative selected-skill"
                 >
                   <span className="whitespace-nowrap">{item}</span>
                   <button
-                    className="ml-3 text-red-500 hover:text-red-700"
-                    onClick={() => handleRemoveItem(item)}
+                    className="absolute selected-skill-remove"
+                    onClick={() => handleRemoveMultipleItem(item)}
                   >
                     &times;
                   </button>
