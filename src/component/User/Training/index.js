@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import { CiCirclePlus } from "react-icons/ci";
 import { FaChevronDown, FaChevronUp, FaTrashAlt } from "react-icons/fa";
-import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import Swal from "sweetalert2";
+import RichTextEditor from "../edit_components/richtexteditor";
+import CustomDatePicker from "../edit_components/customdatepicker";
+import CustomTextInput from "../edit_components/customtextinput";
 
 const TrainingUser = ({ training, setTraining }) => {
   const [show, setShow] = useState(false);
@@ -118,109 +120,32 @@ const TrainingUser = ({ training, setTraining }) => {
                       {activeId === trn.id && (
                         <Card className="m-3 p-3 shadow-sm">
                           <div className="row my-2 g-2">
-                            <div className="col-md-6">
-                              <label
-                                htmlFor={`inputTrainingName4${trn.id}`}
-                                className="form-label"
-                              >
-                                Name
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id={`inputTrainingName4${trn.id}`}
-                                value={trn.name}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    trn.id,
-                                    "name",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </div>
-                            <div className="col-md-6">
-                              <label
-                                htmlFor={`inputCompanyName4${trn.id}`}
-                                className="form-label"
-                              >
-                                Company
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id={`inputCompanyName4${trn.id}`}
-                                value={trn.company}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    trn.id,
-                                    "company",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </div>
-                            <div className="col-md-6">
-                              <label
-                                htmlFor={`inputStartDate4${trn.id}`}
-                                className="form-label"
-                              >
-                                Start Date
-                              </label>
-                              <input
-                                type="date"
-                                className="form-control"
-                                id={`inputStartDate4${trn.id}`}
-                                value={trn.start_date}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    trn.id,
-                                    "start_date",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </div>
-                            <div className="col-md-6">
-                              <label
-                                htmlFor={`inputEndDate4${trn.id}`}
-                                className="form-label"
-                              >
-                                End Date
-                              </label>
-                              <input
-                                type="date"
-                                className="form-control"
-                                id={`inputEndDate4${trn.id}`}
-                                value={trn.end_date}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    trn.id,
-                                    "end_date",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </div>
-                            <div className="col-12">
-                              <label
-                                htmlFor={`inputDescription4${trn.id}`}
-                                className="form-label"
-                              >
-                                Description
-                              </label>
-                              <ReactQuill
-                                theme="snow"
-                                value={trn.description}
-                                onChange={(value) =>
-                                  handleInputChange(
-                                    trn.id,
-                                    "description",
-                                    value
-                                  )
-                                }
-                              />
-                            </div>
+                            
+                            {/* Name */}
+                            <CustomTextInput
+                              data={trn}
+                              handleInputChange={handleInputChange}
+                              name="Name"
+                              rowLength={6}
+                            />
+
+                            {/* Company */}
+                            <CustomTextInput
+                              data={trn}
+                              handleInputChange={handleInputChange}
+                              name="Company"
+                              rowLength={6}
+                            />
+
+                            {/* Start Date */}
+                            <CustomDatePicker data={trn} handleInputChange={handleInputChange} name="Start Date" />
+
+                            {/* End Date */}
+                            <CustomDatePicker data={trn} handleInputChange={handleInputChange} name="End Date" />
+
+                            {/* Description */}
+                            <RichTextEditor data={trn} handleInputChange={handleInputChange} name="Description" />
+
                           </div>
                         </Card>
                       )}
@@ -230,7 +155,7 @@ const TrainingUser = ({ training, setTraining }) => {
               <div className="col-12">
                 <button
                   type="button"
-                  className="btn btn-success d-flex align-items-center justify-content-center gap-2"
+                  className="btn btn-success center gap-2"
                   onClick={handleAddTraining}
                 >
                   <span>Add</span> <CiCirclePlus className="fs-5" />

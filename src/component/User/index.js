@@ -12,11 +12,9 @@ import {
 } from "../../service/CVBank";
 import ProfileUser from "./Profile";
 import SkillsUser from "./Skills";
-import WorkExpUser from "./WorkExp";
-import ProjectUser from "./Project";
-import TrainingUser from "./Training";
 import EducationUser from "./Education";
 import Swal from "sweetalert2";
+import CustomCardEdit from "./edit_components/customcardedit.js";
 
 const User = () => {
   let [name, setName] = useState(null);
@@ -241,9 +239,23 @@ const User = () => {
             setSkillsDefault={setSkillsDefault}
             setToolsDefault={setToolsDefault}
           />
-          <WorkExpUser workExp={workExp} setWorkExp={setWorkExp} />
-          <ProjectUser project={projects} setProject={setProjects} />
-          <TrainingUser training={trainings} setTraining={setTrainings} />
+         
+          <CustomCardEdit
+            listData={workExp}
+            name="Work Experience"
+            setData={setWorkExp}
+          />
+          <CustomCardEdit
+            listData={projects}
+            name="Projects"
+            setData={setProjects}
+          />
+          <CustomCardEdit
+            listData={trainings}
+            name="Trainings"
+            setData={setTrainings}
+          />
+
           <EducationUser
             setSelectedFaculty={setSelectedFaculty}
             degreeList={degreesList}

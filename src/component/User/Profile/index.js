@@ -5,7 +5,10 @@ import {
   FaChevronDown,
   FaChevronUp,
 } from "react-icons/fa";
-import ReactQuill from "react-quill-new";
+import SelectEdit from "../edit_components/selectedit";
+import RichTextEditor from "../edit_components/richtexteditor";
+import CustomDatePicker from "../edit_components/customdatepicker";
+import CustomTextInput from "../edit_components/customtextinput";
 
 const ProfileUser = ({
   name,
@@ -46,6 +49,11 @@ const ProfileUser = ({
       setPreviewImage(photoProfile);
     }
   }, [photoProfile]);
+
+  const genderOptions = [
+    {id :"M", name: "Male"},
+    {id :"F", name: "Female"}
+  ];
 
   return (
     <>
@@ -102,73 +110,39 @@ const ProfileUser = ({
 
                   <div className="col-12 col-md-7 order-2 order-md-1">
                     <div className="row">
-                      <div className="col-12 col-md-6 mb-3">
-                        <label htmlFor="inputName4" className="form-label">
-                          Name
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="inputName4"
-                          value={name || ""}
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-12 col-md-6 mb-3">
-                        <label htmlFor="inputPosition4" className="form-label">
-                          Position
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="inputPosition4"
-                          value={position || ""}
-                          onChange={(e) => setPosition(e.target.value)}
-                        />
-                      </div>
+                      
+                      {/* Name */}
+                      <CustomTextInput 
+                        customCSS="col-12 mb-3"
+                        data={name}
+                        name="Name"
+                        rowLength={6}
+                        setData={setName}
+                        type="Single"
+                      />
+                      
+                      {/* Position */}
+                      <CustomTextInput 
+                        customCSS="col-12 mb-3"
+                        data={position}
+                        name="Position"
+                        rowLength={6}
+                        setData={setPosition}
+                        type="Single"
+                      />
                     </div>
 
                     <div className="row">
-                      <div className="col-12 col-md-6 mb-3">
-                        <label htmlFor="inputDate" className="form-label">
-                          BirthDate
-                        </label>
-                        <input
-                          type="date"
-                          className="form-control"
-                          id="inputDate"
-                          value={birthDate}
-                          onChange={(e) => setBirthDate(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-12 col-md-6 mb-3">
-                        <label htmlFor="inputGender" className="form-label">
-                          Gender
-                        </label>
-                        <select
-                          className="form-control"
-                          id="inputGender"
-                          value={gender}
-                          onChange={(e) => setGender(e.target.value)}
-                        >
-                          <option value="">Select Gender</option>
-                          <option value="M">Male</option>
-                          <option value="F">Female</option>
-                        </select>
-                      </div>
+                      
+                      {/* BirthDate */}
+                      <CustomDatePicker data={birthDate} name="BirthDate" setData={setBirthDate} type="Single" />
+                      
+                      {/* Gender */}
+                      <SelectEdit data={gender} list={genderOptions} name="Gender" setData={setGender} type="Single" />
+
                     </div>
 
-                    <div className="col-12 mt-3">
-                      <label htmlFor="inputDescription" className="form-label">
-                        Summary
-                      </label>
-                      <ReactQuill
-                        theme="snow"
-                        id="inputDescription"
-                        value={summary}
-                        onChange={(content) => setSummary(content)}
-                      />
-                    </div>
+                    <RichTextEditor customCSS="mt-3" data={summary} name="Summary" setData={setSummary} type="Single" />
                   </div>
                 </div>
               </div>

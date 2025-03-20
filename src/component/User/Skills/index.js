@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Select from "react-select";
 import "./index.css";
 import { Card } from "react-bootstrap";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import CustomSelect from "../edit_components/customselect";
+import SelectMultipleEdit from "../edit_components/selectmultipleedit";
 
 const SkillsUser = ({
   skillsList,
@@ -32,38 +33,22 @@ const SkillsUser = ({
         <Card className="m-3 p-3 shadow-sm">
           <div className="container">
             <div className="row">
-              <div className="col-md-6">
-                <label htmlFor="inputSkill" className="form-label">
-                  Skill
-                </label>
-                <Select
-                  value={skillsDefault || []}
-                  isMulti
-                  name="Skills"
-                  options={skillsList}
-                  className="basic-multi-select"
-                  classNamePrefix="select"
-                  onChange={(selectedOptions) => {
-                    setSkillsDefault(selectedOptions);
-                  }}
-                />
-              </div>
-              <div className="col-md-6">
-                <label htmlFor="inputTools" className="form-label">
-                  Tools
-                </label>
-                <Select
-                  value={toolsDefault || []}
-                  isMulti
-                  name="Tools"
-                  options={toolsList}
-                  className="basic-multi-select"
-                  classNamePrefix="select"
-                  onChange={(selectedOptions) => {
-                    setToolsDefault(selectedOptions);
-                  }}
-                />
-              </div>
+              {/* SKILL */}
+              <CustomSelect
+                data={skillsDefault}
+                list={skillsList}
+                name="Skill"
+                setData={setSkillsDefault}
+                type="React-Multiple"
+              />
+
+              {/* TOOL */}
+              <SelectMultipleEdit
+                listValue={toolsList}
+                name="Tool"
+                setValue={setToolsDefault}
+                value={toolsDefault}
+              />
             </div>
           </div>
         </Card>

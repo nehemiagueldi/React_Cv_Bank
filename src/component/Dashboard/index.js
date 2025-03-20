@@ -5,10 +5,10 @@ import {
   getUniversityData,
 } from "../../service/CVBank";
 import "./index.css";
-import FilterButton from "../Button/filterbutton";
-import FilterInput from "../Button/filterinput";
 import DashboardDatatables from "./dashboarddt";
-import FilterSearch from "../Button/filtersearch";
+import FilterInput from "../Filter/filterinput";
+import FilterSearch from "../Filter/filtersearch";
+import FilterDropdown from "../Filter/filterdropdown";
 
 const Dashboard = () => {
   const [filters, setFilters] = useState({
@@ -47,7 +47,7 @@ const Dashboard = () => {
 
         <div className="d-flex flex-column gap-3">
           {/* Gender */}
-          <FilterButton
+          <FilterDropdown
             dataFilter={["M", "F"]}
             id={1}
             name="Gender"
@@ -55,7 +55,7 @@ const Dashboard = () => {
           />
 
           {/* Experience */}
-          <FilterButton
+          <FilterDropdown
             dataFilter={["9", "8", "6", "4", "0"]}
             id={2}
             name="Experience"
@@ -63,7 +63,7 @@ const Dashboard = () => {
           />
 
           {/* Age */}
-          <FilterButton
+          <FilterDropdown
             dataFilter={["20", "26", "31"]}
             id={3}
             name="Age"
@@ -78,7 +78,7 @@ const Dashboard = () => {
           />
 
           {/* GPA */}
-          <FilterButton
+          <FilterDropdown
             dataFilter={["2.75", "3.0", "3.5", "3.75"]}
             id={5}
             name="GPA"

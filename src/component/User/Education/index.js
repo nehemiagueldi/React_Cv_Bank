@@ -3,6 +3,9 @@ import { Card } from "react-bootstrap";
 import { CiCirclePlus } from "react-icons/ci";
 import { FaChevronDown, FaChevronUp, FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
+import SelectEdit from "../edit_components/selectedit";
+import CustomDatePicker from "../edit_components/customdatepicker";
+import CustomTextInput from "../edit_components/customtextinput";
 
 const EducationUser = ({
   setSelectedFaculty,
@@ -32,6 +35,34 @@ const EducationUser = ({
     );
   };
 
+  const handleInputChange2 = (id, field, list, value) => {
+    const selectedInput = list.find((item) => item.id === parseInt(value, 10));
+    const valueField = selectedInput || { id: null, name: "" };
+
+    setEducation((prevEducation) =>
+      prevEducation.map((edc) =>
+        edc.id === id
+          ? field !== "faculty"
+            ? { ...edc, [field]: valueField }
+            : {
+                ...edc,
+                major: {
+                  ...edc.major,
+                  id: null,
+                  name: "",
+                  faculty: valueField,
+                },
+              }
+          : edc
+      )
+    );
+
+    if(field === "faculty") {
+      setSelectedFaculty(selectedInput ? selectedInput.id : null);
+    }
+
+  };
+
   const handleFacultyChange = (id, facultyId) => {
     const selectedFaculty = facultyList.find(
       (fct) => fct.id === parseInt(facultyId, 10)
@@ -56,8 +87,8 @@ const EducationUser = ({
     setSelectedFaculty(selectedFaculty ? selectedFaculty.id : null);
   };
 
-  let handleAddEducation = () => {
-    let newItem = {
+  const handleAddEducation = () => {
+    const newItem = {
       id: new Date().getTime(),
       university: {
         id: null,
@@ -82,7 +113,7 @@ const EducationUser = ({
     setEducation((prevEducation) => [...prevEducation, newItem]);
   };
 
-  let handleDeleteEducation = (id) => {
+  const handleDeleteEducation = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -162,203 +193,55 @@ const EducationUser = ({
                       {activeId === edc.id && (
                         <Card className="m-3 p-3 shadow-sm">
                           <div className="row my-2 g-2">
-                            <div className="col-md-6">
-                              <label
-                                htmlFor={`inputDegreeName4${edc.id}`}
-                                className="form-label"
-                              >
-                                Degree
-                              </label>
-                              <select
-                                className="form-select"
-                                value={edc.degree.id || ""}
-                                id={`inputDegreeName4${edc.id}`}
-                                aria-label="Select Degree"
-                                onChange={(e) => {
-                                  const selectedDegree = degreeList.find(
-                                    (dgr) =>
-                                      dgr.id === parseInt(e.target.value, 10)
-                                  );
-                                  handleInputChange(
-                                    edc.id,
-                                    "degree",
-                                    selectedDegree || { id: null, name: "" }
-                                  );
-                                }}
-                              >
-                                <option disabled value="">Choose...</option>
-                                {degreeList &&
-                                  degreeList.map((dgr) => (
-                                    <option key={dgr.id} value={dgr.id}>
-                                      {dgr.name === edc.degree.name
-                                        ? edc.degree.name
-                                        : dgr.name}
-                                    </option>
-                                  ))}
-                              </select>
-                            </div>
-                            
-                            <div className="col-md-4">
-                              <label
-                                htmlFor={`inputUniversityName4${edc.id}`}
-                                className="form-label"
-                              >
-                                University
-                              </label>
-                              <select
-                                className="form-control"
-                                value={edc.university.id || ""}
-                                id={`inputUniversityName4${edc.id}`}
-                                onChange={(e) => {
-                                  const selectedUniversity =
-                                    universityList.find(
-                                      (unv) =>
-                                        unv.id === parseInt(e.target.value, 10)
-                                    );
-                                  handleInputChange(
-                                    edc.id,
-                                    "university",
-                                    selectedUniversity || { id: null, name: "" }
-                                  );
-                                }}
-                              >
-                                <option disabled value="">
-                                  Choose...
-                                </option>
-                                {universityList &&
-                                  universityList.map((unv) => (
-                                    <option key={unv.id} value={unv.id}>
-                                      {unv.name}
-                                    </option>
-                                  ))}
-                              </select>
-                            </div>
-                            <div className="col-md-2">
-                              <label
-                                htmlFor={`inputGPA4${edc.id}`}
-                                className="form-label"
-                              >
-                                GPA
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id={`inputGPA4${edc.id}`}
-                                value={edc.gpa}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    edc.id,
-                                    "gpa",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </div>
-                            <div className="col-md-6">
-                              <label
-                                htmlFor={`inputFaculty4${edc.id}`}
-                                className="form-label"
-                              >
-                                Faculty
-                              </label>
-                              <select
-                                className="form-select"
-                                value={edc.major.faculty.id || ""}
-                                id={`inputFaculty4${edc.id}`}
-                                aria-label="Select Faculty"
-                                onChange={(e) =>
-                                  handleFacultyChange(edc.id, e.target.value)
-                                }
-                              >
-                                <option disabled value="">
-                                  Choose...
-                                </option>
-                                {facultyList &&
-                                  facultyList.map((fct) => (
-                                    <option key={fct.id} value={fct.id}>
-                                      {fct.name}
-                                    </option>
-                                  ))}
-                              </select>
-                            </div>
-                            <div className="col-md-6">
-                              <label
-                                htmlFor={`inputMajor4${edc.id}`}
-                                className="form-label"
-                              >
-                                Major
-                              </label>
-                              <select
-                                className="form-select"
-                                value={edc.major.id || ""}
-                                id={`inputMajor4${edc.id}`}
-                                aria-label="Select Major"
-                                onChange={(e) => {
-                                  const selectedMajor = majorList.find(
-                                    (mjr) =>
-                                      mjr.id === parseInt(e.target.value, 10)
-                                  );
-                                  handleInputChange(
-                                    edc.id,
-                                    "major",
-                                    selectedMajor || { id: null, name: "" }
-                                  );
-                                }}
-                                disabled={!edc.major.faculty.id}
-                              >
-                                <option disabled value="">
-                                  Choose...
-                                </option>
-                                {majorList &&
-                                  majorList.map((mjr) => (
-                                    <option key={mjr.id} value={mjr.id}>
-                                      {mjr.name}
-                                    </option>
-                                  ))}
-                              </select>
-                            </div>
-                            <div className="col-md-6">
-                              <label
-                                htmlFor={`inputStartDate4${edc.id}`}
-                                className="form-label"
-                              >
-                                Start Date
-                              </label>
-                              <input
-                                type="date"
-                                className="form-control"
-                                id={`inputStartDate4${edc.id}`}
-                                value={edc.startDate}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    edc.id,
-                                    "startDate",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </div>
-                            <div className="col-md-6">
-                              <label
-                                htmlFor={`inputEndDate4${edc.id}`}
-                                className="form-label"
-                              >
-                                End Date
-                              </label>
-                              <input
-                                type="date"
-                                className="form-control"
-                                id={`inputEndDate4${edc.id}`}
-                                value={edc.endDate}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    edc.id,
-                                    "endDate",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </div>
+                            {/* Degree Edit */}
+                            <SelectEdit
+                              data={edc}
+                              list={degreeList}
+                              handleInputChange={handleInputChange2}
+                              name="Degree"
+                            />
+
+                            {/* University Edit  */}
+                            <SelectEdit
+                              data={edc}
+                              list={universityList}
+                              handleInputChange={handleInputChange2}
+                              name="University"
+                              rowLength="4"
+                            />
+
+                            {/* GPA Edit*/}
+                            <CustomTextInput data={edc} handleInputChange={handleInputChange2} name="GPA" />
+
+                            {/* Faculty Edit */}
+                            <SelectEdit
+                              data={edc}
+                              list={facultyList}
+                              handleInputChange={handleInputChange2}
+                              name="Faculty"
+                            />
+
+                            {/* Major Edit */}
+                            <SelectEdit
+                              data={edc}
+                              list={majorList}
+                              handleInputChange={handleInputChange2}
+                              name="Major"
+                            />
+
+                            {/* Start Date Edit */}
+                            <CustomDatePicker
+                              data={edc}
+                              handleInputChange={handleInputChange2}
+                              name="Start Date"
+                            />
+
+                            {/* End Date Edit */}
+                            <CustomDatePicker
+                              data={edc}
+                              handleInputChange={handleInputChange2}
+                              name="End Date"
+                            />
                           </div>
                         </Card>
                       )}
@@ -368,7 +251,7 @@ const EducationUser = ({
               <div className="col-12">
                 <button
                   type="button"
-                  className="btn btn-success d-flex align-items-center justify-content-center gap-2"
+                  className="btn btn-success center gap-2"
                   onClick={handleAddEducation}
                 >
                   <span>Add</span> <CiCirclePlus className="fs-5" />
