@@ -5,10 +5,10 @@ import {
   FaChevronDown,
   FaChevronUp,
 } from "react-icons/fa";
-import SelectEdit from "../edit_components/selectedit";
 import RichTextEditor from "../edit_components/richtexteditor";
 import CustomDatePicker from "../edit_components/customdatepicker";
 import CustomTextInput from "../edit_components/customtextinput";
+import CustomSelect from "../edit_components/customselect";
 
 const ProfileUser = ({
   name,
@@ -138,7 +138,7 @@ const ProfileUser = ({
                       <CustomDatePicker data={birthDate} name="BirthDate" setData={setBirthDate} type="Single" />
                       
                       {/* Gender */}
-                      <SelectEdit data={gender} list={genderOptions} name="Gender" setData={setGender} type="Single" />
+                      <CustomSelect data={gender} list={genderOptions} name="Gender" setData={setGender} type="Single" />
 
                     </div>
 

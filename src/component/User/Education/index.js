@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Card } from "react-bootstrap";
-import { CiCirclePlus } from "react-icons/ci";
 import { FaChevronDown, FaChevronUp, FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
-import SelectEdit from "../edit_components/selectedit";
-import CustomDatePicker from "../edit_components/customdatepicker";
+import CustomSelect from "../edit_components/customselect";
 import CustomTextInput from "../edit_components/customtextinput";
+import CustomDatePicker from "../edit_components/customdatepicker";
+import { CiCirclePlus } from "react-icons/ci";
+
 
 const EducationUser = ({
   setSelectedFaculty,
@@ -174,7 +175,7 @@ const EducationUser = ({
                           onClick={() => handleShowId(edc.id)}
                         >
                           <span>{edc.university.name}</span>
-                          {activeId !== edc.id ? (
+                          {activeId === edc.id ? (
                             <FaChevronUp />
                           ) : (
                             <FaChevronDown />
@@ -194,7 +195,7 @@ const EducationUser = ({
                         <Card className="m-3 p-3 shadow-sm">
                           <div className="row my-2 g-2">
                             {/* Degree Edit */}
-                            <SelectEdit
+                            <CustomSelect
                               data={edc}
                               list={degreeList}
                               handleInputChange={handleInputChange2}
@@ -202,7 +203,7 @@ const EducationUser = ({
                             />
 
                             {/* University Edit  */}
-                            <SelectEdit
+                            <CustomSelect
                               data={edc}
                               list={universityList}
                               handleInputChange={handleInputChange2}
@@ -214,7 +215,7 @@ const EducationUser = ({
                             <CustomTextInput data={edc} handleInputChange={handleInputChange2} name="GPA" />
 
                             {/* Faculty Edit */}
-                            <SelectEdit
+                            <CustomSelect
                               data={edc}
                               list={facultyList}
                               handleInputChange={handleInputChange2}
@@ -222,7 +223,7 @@ const EducationUser = ({
                             />
 
                             {/* Major Edit */}
-                            <SelectEdit
+                            <CustomSelect
                               data={edc}
                               list={majorList}
                               handleInputChange={handleInputChange2}

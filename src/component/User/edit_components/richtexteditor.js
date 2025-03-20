@@ -1,6 +1,7 @@
 import React from "react";
 import ReactQuill from "react-quill-new";
 import InputLabel from "../atoms/inputlabel";
+import 'react-quill/dist/quill.snow.css';
 
 const RichTextEditor = ({
   customCSS = "",
