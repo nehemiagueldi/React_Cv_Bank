@@ -1,7 +1,8 @@
 .btn-custom {
   color: white;
   background-color: #0b2343;
-  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .btn-custom:hover {
@@ -15,4 +16,25 @@
   background-color: #092132;
   transform: scale(0.95);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-child {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  padding-right: 2rem;
+  color: white;
+  transition: transform 0.3s ease, background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.btn-child span {
+  display: inline-block;
+}
+
+.btn-child svg {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
 }

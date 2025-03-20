@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { calculateAge } from "../../service/CVBank";
+import { calculateAge, createMarkup } from "../../../service/CVBank";
 
 const Profile = ({ profileData }) => {
   let [namePerson, setNamePerson] = useState(null);
@@ -25,30 +25,40 @@ const Profile = ({ profileData }) => {
   return (
     <>
       <div>
-        <h5 className="text-white text-center rounded p-3 text-uppercase fw-bold" style={{ backgroundColor: "#0B2343" }}>
-          Profile
+        <h5
+          className="text-white text-center rounded p-3 text-uppercase fw-bold"
+          style={{ backgroundColor: "#0B2343" }}
+        >
+          PROFILE
         </h5>
         <div className="container row align-items-center">
           <div className="col">
             <h2>{namePerson}</h2>
             <h4>
-              {genderPerson === "M" ? "Male" : "Female"}, {calculateAge(birthDatePerson)} y/o
+              {genderPerson === "M" ? "Male" : "Female"},{" "}
+              {calculateAge(birthDatePerson)} y/o
             </h4>
             <h4>{positionPerson}</h4>
           </div>
-          <div className="col text-end">
+          <div
+            style={{
+              width: "250px",
+              height: "250px",
+            }}
+          >
             <img
-              src={photoPerson === null ? "https://res.cloudinary.com/debojimrw/image/upload/v1736410512/default_go00tp.jpg" : photoPerson}
-              alt={photoPerson === null ? "Default profile picture" : "Profile picture User"}
-              style={{
-                width: "35%",
-                height: "35%",
-              }}
-              className="rounded"
+              src={
+                photoPerson === null
+                  ? "https://res.cloudinary.com/debojimrw/image/upload/v1736410512/default_go00tp.jpg"
+                  : photoPerson
+              }
+              alt={namePerson}
+              className="w-100 h-100 rounded"
+              style={{ objectFit: "cover" }}
             />
           </div>
           <h4>Summary</h4>
-          <p style={{ textAlign: "justify" }}>{summaryPerson}</p>
+          <p style={{ textAlign: "justify" }} dangerouslySetInnerHTML={createMarkup(summaryPerson)}></p>
         </div>
       </div>
     </>

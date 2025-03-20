@@ -1,0 +1,14 @@
+.filter-card {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.filter-card.show {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.datatable-container {
+  width: 80%;
+}

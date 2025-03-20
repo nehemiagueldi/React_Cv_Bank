@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createMarkup } from "../../service/CVBank";
+import { createMarkup } from "../../../service/CVBank";
 
 const Training = ({ trainingData }) => {
   let [trainings, setTrainings] = useState(null);
@@ -26,10 +26,6 @@ const Training = ({ trainingData }) => {
                   <h4 className="fw-bold">{training.name}&nbsp;at&nbsp;</h4>
                   <h4 className="fw-bold">{training.company}</h4>
                 </div>
-                {/* <div className="d-flex">
-                  <h5 className="fw-bold">{formatDate(training.start_date)}&nbsp;-&nbsp;</h5>
-                  <h5 className="fw-bold">{formatDate(training.end_date)}</h5>
-                </div> */}
                 <div dangerouslySetInnerHTML={createMarkup(training.description)}></div>
               </div>
             ))}
