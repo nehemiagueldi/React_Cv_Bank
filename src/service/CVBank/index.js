@@ -185,3 +185,12 @@
     let resultDate = currentDate - date;
     return resultDate;
   }
+
+  export function formatToCamelCase (text) {
+    const result = text.toLowerCase()
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, (char, index) =>
+      index === 0 ? char.toLowerCase() : char.toUpperCase()
+    )
+    .replace(/\s+/g, "");
+    return result;
+  } 

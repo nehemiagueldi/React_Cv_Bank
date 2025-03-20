@@ -25,7 +25,7 @@ const FilterSearch = ({ id, name, setFilters }) => {
   return (
     <div className="">
       <button
-        className="btn btn-custom1 d-flex justify-content-between align-items-center no-padding"
+        className="btn btn-custom1 center no-padding"
         data-bs-toggle="collapse"
         data-bs-target={`#collapseExample${name}`}
         onClick={() => handleId(id)}
@@ -50,19 +50,10 @@ const FilterSearch = ({ id, name, setFilters }) => {
             />
             {inputValue !== "" && (
               <button
-                className="input-button"
+                className="remove-button"
                 onClick={() => {
                   setInputValue("");
                   setFilters((prev) => ({ ...prev, [name]: "" }));
-                }}
-                style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  backgroundColor: "transparent",
-                  border: "none",
-                  cursor: "pointer",
                 }}
               >
                 X
