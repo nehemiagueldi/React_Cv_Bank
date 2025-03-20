@@ -43,11 +43,12 @@ const SkillsUser = ({
               />
 
               {/* TOOL */}
-              <SelectMultipleEdit
-                listValue={toolsList}
+              <CustomSelect
+                data={toolsDefault}
+                list={toolsList}
                 name="Tool"
-                setValue={setToolsDefault}
-                value={toolsDefault}
+                setData={setToolsDefault}
+                type="React-Multiple"
               />
             </div>
           </div>
