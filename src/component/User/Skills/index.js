@@ -3,7 +3,6 @@ import "./index.css";
 import { Card } from "react-bootstrap";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import CustomSelect from "../edit_components/customselect";
-import SelectMultipleEdit from "../edit_components/selectmultipleedit";
 
 const SkillsUser = ({
   skillsList,
